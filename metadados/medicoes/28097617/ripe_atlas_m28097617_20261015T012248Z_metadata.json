@@ -1,0 +1,17 @@
+{
+  "measurement_id": 28097617,
+  "url": "https://atlas.ripe.net/api/v2/measurements/28097617/results/",
+  "parametros": {
+    "start": 1790709767,
+    "stop": 1792027367,
+    "probe_ids": "1013813,20423,10836,52245,35556"
+  },
+  "inicio_utc": "2026-09-29T19:22:47.449440+00:00",
+  "fim_utc": "2026-10-15T01:22:47.449440+00:00",
+  "coletado_em_utc": "2026-10-15T01:22:48.194852+00:00",
+  "status_http": 200,
+  "quantidade_registros": 27412,
+  "quantidade_colunas_dataframe": 26,
+  "arquivo_json": "ripe_atlas_m28097617_20261015T012248Z.json",
+  "arquivo_tabelar": "ripe_atlas_m28097617_20261015T012248Z.csv"
+}
