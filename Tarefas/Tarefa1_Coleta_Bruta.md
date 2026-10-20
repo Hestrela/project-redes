@@ -1,13 +1,13 @@
-# Diário da Tarefa 1 — Problema e coleta bruta (sem rótulo)
+# Diário da Tarefa 1 — Problema e coleta bruta (sem rótulo) (PREENCHER)
 
 **Período:** 17/08/2026 a 17/09/2026  
 **Projeto:** Preditor de degradação de rede com RTT normalizado (independente da rota)  
 **Modelo desta disciplina:** árvore de decisão. Nesta tarefa não se treina árvore.
 
-**Equipe:**  
-**Integrantes:**  
+**Equipe:Grupo 4**  
+**Integrantes:Vinicius Eduardo Santos de Oliveira, Giulia Ayumi Shimada Cardoso, Heitor Estrela de Andrade, Gabriel Romão da Silva, Miguel Augusto da Costa Souza**  
 **Scrum Master da tarefa:**  
-**Repositório GitHub:**
+**Repositório GitHub: https://github.com/ViniEduOliveira/project-redes**
 
 > Esta tarefa entrega o problema e o **dado cru**. Não há classe OK, RISCO ou FALHA. Não há baseline, não há mediana e não há árvore. Quem rotular aqui mistura a coleta com a decisão da Tarefa 2.
 >
