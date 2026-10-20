@@ -41,7 +41,7 @@ Responder no diário. A resposta tem de bater com o RFC.
 | O que está proibido como definição de falha? | Limiar global de RTT, país, continente ou nome da rota. |
 
 - [ ] RFC do grupo preenchido a partir desta tabela
-- [ ] Dicionário v0.1 só com variáveis brutas
+- [x] Dicionário v0.1 só com variáveis brutas
 
 ## 2. O que coletar (e o que não criar)
 
@@ -65,11 +65,11 @@ Cada registro bruto guarda, quando a API trouxer:
 
 Regras da coleta:
 
-- [ ] Vários fluxos, com pelo menos um caminho curto e um caminho longo no mesmo período
+- [x] Vários fluxos, com pelo menos um caminho curto e um caminho longo no mesmo período
 - [ ] A diversidade geográfica está documentada e **não** virou classe
-- [ ] Dois blocos de tempo contíguos, sem amostra nos dois: Período A (só para o baseline da Tarefa 2) e Período B (medições que serão rotuladas). Referência do projeto: 7 dias + 7 dias a partir de 06/09/2026 04:32 UTC. Outro recorte só vale se os dois blocos continuarem sem sobreposição e o A tiver volume para o mínimo da Tarefa 2
+- [x] Dois blocos de tempo contíguos, sem amostra nos dois: Período A (só para o baseline da Tarefa 2) e Período B (medições que serão rotuladas). Referência do projeto: 7 dias + 7 dias a partir de 06/09/2026 04:32 UTC. Outro recorte só vale se os dois blocos continuarem sem sobreposição e o A tiver volume para o mínimo da Tarefa 2
 - [ ] Timeout permanece no arquivo
-- [ ] JSON bruto preservado; a tabela tratada não apaga o bruto
+- [x] JSON bruto preservado; a tabela tratada não apaga o bruto
 - [ ] Parâmetros (período, probes, destinos) em `config/`, não espalhados no código
 - [ ] HTTP com timeout, releitura em erro transitório e coleta idempotente (rodar de novo não duplica)
 - [ ] `requirements.txt` da coleta
@@ -79,7 +79,7 @@ Regras da coleta:
 ## 3. Relatório de qualidade — ainda sem classe
 
 - [ ] Registros por `fluxo_id`
-- [ ] Início e fim de cada fluxo
+- [x] Início e fim de cada fluxo
 - [ ] Campos ausentes (RTT vazio é ausência, não zero)
 - [ ] Duplicatas
 - [ ] Quantidade de timeouts
