@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artigo Estrutura de dados II</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+  <header class="top-header">
+    <div class="brand">
+      <i class="ph ph-shield-checkered"></i>
+      <span>Modelo Preditivo de Redes</span>
+    </div>
+    <nav class="header-links">
+      <a href="https://github.com/ViniEduOliveira/project-redes" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <div class="layout-container">
+    <aside class="sidebar-toc" id="sidebar-toc">
+      
+      <div class="toc-header" id="toc-toggle">
+        <div class="toc-title">
+          <i class="ph ph-list-bullets"></i>
+          <span>Índice do Artigo</span>
+        </div>
+        <i class="ph ph-caret-left toc-arrow"></i>
+      </div>
+
+      <nav class="toc-nav">
+        <a href="#introducao" class="toc-link">1. Introdução & Problemática</a>
+        <a href="#exemplo-pratico" class="toc-link">2. Cenário do Desvio Geográfico</a>
+        <a href="#secoes-modelos" class="toc-link">3. Modelos Avaliados</a>
+        <a href="#secoes-modelos" class="toc-link sub" data-slide="0">3.1. Árvore de Decisão</a>
+        <a href="#secoes-modelos" class="toc-link sub" data-slide="1">3.2. Random Forest</a>
+        <a href="#secoes-modelos" class="toc-link sub" data-slide="2">3.3. XGBoost</a>
+        <a href="#comparativo" class="toc-link">4. Quadro Comparativo</a>
+        <a href="#codigo" class="toc-link">5. Pipeline Python & GeoIP</a>
+        <a href="#resultados" class="toc-link">6. Resultados & Métricas</a>
+        <a href="#recomendacao" class="toc-link">7. Avaliação e Escolha do Modelo</a>
+        <a href="#videos" class="toc-link">8. Vídeo Demonstrativo</a>
+        <a href="#links" class="toc-link">9. Links Recomendados</a>
+        <a href="#referencias" class="toc-link">10. Referências</a>
+        <a href="#autores" class="toc-link">11. Autores</a>
+      </nav>
+    </aside>
+
+    <main class="article-content">
+      <header class="article-hero">
+        <h1 class="article-title">Detecção Autônoma de Anomalias de Tráfego Web por Desvio Geográfico e Volumétrico Utilizando Aprendizado de Máquina</h1>
+        <p class="article-subtitle">Estudo comparativo entre Árvores de Decisão, Random Forest e XGBoost na identificação de ataques distribuídos (DDoS/Botnets) a partir de surtos atípicos de acessos via GeoIP.</p>
+
+        <div class="article-meta">
+          <div class="meta-authors">
+            <div class="author-avatar-sm"><i class="ph ph-users"></i></div>
+            <span>Por: <strong>Vinicius O., Giulia A., Heitor E., Gabriel R., Miguel S.</strong></span>
+          </div>
+          <div>Publicado em: <time>08/09/2026</time></div>
+          <div>Última Revisão: <time>18/10/2026</time></div>
+        </div>
+      </header>
+
+      <section id="introducao" class="section-block">
+        <h2>1. Introdução & Problemática</h2>
+        <p>Sistemas tradicionais de <em>Web Analytics</em> (como Google Analytics e logs estáticos de Nginx) concentram-se em apresentar gráficos consolidados sobre os principais países que acessam uma aplicação web. Contudo, relatórios estáticos não conseguem reagir a ameaças de cibersegurança dinâmicas.</p>
+        <p><strong>A Problemática Central:</strong> Quando uma região geográfica com histórico insignificante de requisições (ex.: 0.1% do tráfego habitual) apresenta um aumento exponencial e repentino em um intervalo de poucos minutos, o sistema está enfrentando um surto de tráfego legítimo por viralização ou um ataque volumétrico distribuído (Botnet/DDoS)?</p>
+        <p>Neste estudo, avaliamos comparativamente algoritmos de Aprendizado de Máquina alimentados por geolocalização de IP (GeoIP) e métricas de desvio padrão relativo (Z-score por país e taxa de erro HTTP 4xx/5xx) para determinar qual modelo se destaca na classificação do tráfego entre os estados <strong>NORMAL</strong>, <strong>SUSPEITO</strong> e <strong>ATAQUE</strong>.</p>
+      </section>
+
+      <section id="exemplo-pratico" class="section-block">
+        <h2>2. Cenário Prático do Desvio Geográfico</h2>
+        <p>Abaixo ilustra-se o comportamento de uma anomalia geográfica: um surto atípico de requisições com origem em blocos IP não frequentes aciona os classificadores de inteligência artificial:</p>
+
+        <figure class="figure-card">
+          <div class="figure-img-placeholder">
+            <i class="ph ph-globe-hemisphere-west" style="font-size: 3.5rem;"></i>
+            <span>[Análise de Tráfego: Baseline por País vs. Surto Anômalo Geográfico]</span>
+          </div>
+          <figcaption class="figure-caption">Figura 1: Comparativo entre a linha de base (baseline) histórica de acessos por país e a detecção de pico anômalo por desvio Z-score.</figcaption>
+        </figure>
+      </section>
+
+      <section id="secoes-modelos" class="section-block">
+        <div class="section-header-flex">
+          <h2>3. Modelos Avaliados no Experimento</h2>
+          <div class="slider-controls">
+            <span id="sliderCounter" class="slider-counter">1 / 3</span>
+            <button class="slider-btn" id="prevModelBtn" aria-label="Anterior">
+              <i class="ph ph-caret-left"></i>
+            </button>
+            <button class="slider-btn" id="nextModelBtn" aria-label="Próximo">
+              <i class="ph ph-caret-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="models-slider-container">
+          <div class="models-slider-track" id="modelsTrack">
+
+            <div class="model-slide" id="mod-dt">
+              <div class="model-text">
+                <h3>3.1. Árvore de Decisão (Decision Tree)</h3>
+                <p>Modelo não-paramétrico que particiona o espaço de atributos por regras lógicas claras. Destaca-se pela capacidade de conversão direta em regras de firewall (WAF) com tempo de resposta quase instantâneo.</p>
+              </div>
+              <figure class="figure-card">
+                <div class="figure-img-placeholder">
+                  <i class="ph ph-tree-structure" style="font-size: 3.5rem;"></i>
+                  <span>[Diagrama: Regras de Decisão para Filtro GeoIP]</span>
+                </div>
+                <figcaption class="figure-caption">Figura 2: Árvore de decisão otimizada para classificação de anomalias por geolocalização.</figcaption>
+              </figure>
+            </div>
+
+            <div class="model-slide" id="mod-rf">
+              <div class="model-text">
+                <h3>3.2. Random Forest (Bagging)</h3>
+                <p>Combina múltiplas árvores de decisão treinadas em paralelo em subconjuntos de atributos (país, ASN, taxa de erros). Oferece alta resiliência a falsos positivos causados por tráfego sazonal.</p>
+              </div>
+              <figure class="figure-card">
+                <div class="figure-img-placeholder">
+                  <i class="ph ph-squares-four" style="font-size: 3.5rem;"></i>
+                  <span>[Esquema: Avaliação Multivariada por Floresta Aleatória]</span>
+                </div>
+                <figcaption class="figure-caption">Figura 3: Mineração de anomalias volumétricas usando Random Forest.</figcaption>
+              </figure>
+            </div>
+
+            <div class="model-slide" id="mod-xgb">
+              <div class="model-text">
+                <h3>3.3. XGBoost (Gradient Boosting)</h3>
+                <p>Algoritmo de gradiente otimizado que ajusta sequencialmente os erros dos modelos anteriores. Busca obter a maior acurácia possível em datasets de altíssima volumetria de logs.</p>
+              </div>
+              <figure class="figure-card">
+                <div class="figure-img-placeholder">
+                  <i class="ph ph-lightning" style="font-size: 3.5rem;"></i>
+                  <span>[Esquema: Boosting Iterativo para Picos por Origem IP]</span>
+                </div>
+                <figcaption class="figure-caption">Figura 4: Otimização iterativa por Boosting para identificação de picos de tráfego.</figcaption>
+              </figure>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section id="comparativo" class="section-block">
+        <div class="section-header-flex">
+          <h2>4. Quadro Comparativo dos Modelos</h2>
+          <div class="compare-filter-bar">
+            <button class="compare-filter-btn active" data-filter="all">Todos os Modelos</button>
+            <button class="compare-filter-btn" data-filter="col-dt">Árvore de Decisão</button>
+            <button class="compare-filter-btn" data-filter="col-rf">Random Forest</button>
+            <button class="compare-filter-btn" data-filter="col-xgb">XGBoost</button>
+          </div>
+        </div>
+
+        <div class="modern-compare-wrapper">
+          <table class="modern-compare-table" id="compareTable">
+            <thead>
+              <tr>
+                <th class="col-criterion">Critério</th>
+                <th class="col-model col-dt">
+                  <div class="model-header-cell">
+                    <i class="ph ph-tree-structure"></i>
+                    <span>Árvore de Decisão</span>
+                  </div>
+                </th>
+                <th class="col-model col-rf">
+                  <div class="model-header-cell">
+                    <i class="ph ph-squares-four"></i>
+                    <span>Random Forest</span>
+                  </div>
+                </th>
+                <th class="col-model col-xgb">
+                  <div class="model-header-cell">
+                    <i class="ph ph-lightning"></i>
+                    <span>XGBoost</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-criterion"><strong>Abordagem GeoIP</strong></td>
+                <td class="col-dt">Separação por limiares rígidos de volume Z-score e código ISO do país.</td>
+                <td class="col-rf">Votação paralela ponderando país, ASN e variação temporal.</td>
+                <td class="col-xgb">Minimização de perda por gradiente em múltiplas regiões.</td>
+              </tr>
+              <tr>
+                <td class="col-criterion"><strong>Vantagens</strong></td>
+                <td class="col-dt"><span class="check-text">✓ Exportável para regras WAF</span><br><span class="check-text">✓ Resposta instantânea</span></td>
+                <td class="col-rf"><span class="check-text">✓ Baixo índice de falso positivo</span><br><span class="check-text">✓ Robusto a picos sazonais</span></td>
+                <td class="col-xgb"><span class="check-text">✓ Precisão máxima em volumetria</span><br><span class="check-text">✓ Detecta ataques sutis</span></td>
+              </tr>
+              <tr>
+                <td class="col-criterion"><strong>Desvantagens</strong></td>
+                <td class="col-dt"><span class="cross-text">✗ Sensível a ruídos sem poda</span></td>
+                <td class="col-rf"><span class="cross-text">✗ Maior uso de memória</span><br><span class="cross-text">✗ Difícil auditoria em tempo real</span></td>
+                <td class="col-xgb"><span class="cross-text">✗ Treinamento mais lento</span><br><span class="cross-text">✗ Exige parametrização fina</span></td>
+              </tr>
+              <tr>
+                <td class="col-criterion"><strong>Interpretabilidade</strong></td>
+                <td class="col-dt"><span class="metric-chip badge-green"><i class="ph ph-check-circle"></i> Alta (Regras em texto)</span></td>
+                <td class="col-rf"><span class="metric-chip badge-yellow"><i class="ph ph-warning"></i> Média (Feature Importance)</span></td>
+                <td class="col-xgb"><span class="metric-chip badge-orange"><i class="ph ph-eye-slash"></i> Média/Baixa (Exige SHAP)</span></td>
+              </tr>
+              <tr>
+                <td class="col-criterion"><strong>Latência de Resposta</strong></td>
+                <td class="col-dt"><span class="metric-chip badge-blue"><i class="ph ph-lightning"></i> Ultrabaixa (&lt; 0.03ms)</span></td>
+                <td class="col-rf"><span class="metric-chip badge-yellow"><i class="ph ph-clock"></i> Média (0.88ms)</span></td>
+                <td class="col-xgb"><span class="metric-chip badge-orange"><i class="ph ph-hourglass-medium"></i> Moderada (1.35ms)</span></td>
+              </tr>
+              <tr>
+                <td class="col-criterion"><strong>Acurácia Validação</strong></td>
+                <td class="col-dt"><span class="metric-chip badge-yellow">96.2%</span></td>
+                <td class="col-rf"><span class="metric-chip badge-green">97.8%</span></td>
+                <td class="col-xgb"><span class="metric-chip badge-green">98.3%</span></td>
+              </tr>
+              <tr>
+                <td class="col-criterion"><strong>Aplicação Ideal</strong></td>
+                <td class="col-dt">Bloqueio imediato na camada de borda (Edge Computing / WAF).</td>
+                <td class="col-rf">Sistemas SIEM e análise contínua em servidores centrais.</td>
+                <td class="col-xgb">Análise offline de grande volumetria e detecção avançada.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="codigo" class="section-block">
+        <h2>5. Pipeline Python & Processamento GeoIP</h2>
+        <p>Abaixo apresenta-se a estrutura em Python para extração de atributos e comparação entre os algoritmos de aprendizado:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>benchmark_modelos.py</span>
+            <span>Python 3.10 | scikit-learn & xgboost</span>
+          </div>
+          <pre><code>from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
+from sklearn.metrics import classification_report
+
+FEATURES = ["zscore_volume_pais", "ratio_erro_http", "requisicoes_por_minuto", "entropia_asn"]
+
+# Dicionário com os 3 candidatos a avaliação
+modelos = {
+    "DecisionTree": DecisionTreeClassifier(max_depth=4, criterion="entropy", random_state=42),
+    "RandomForest": RandomForestClassifier(n_estimators=100, random_state=42),
+    "XGBoost": XGBClassifier(n_estimators=100, learning_rate=0.1, random_state=42)
+}
+
+# Execução do benchmark comparativo
+for nome, model in modelos.items():
+    model.fit(X_treino[FEATURES], y_treino)
+    y_pred = model.predict(X_val[FEATURES])
+    print(f"=== Modelo: {nome} ===")
+    print(classification_report(y_val, y_pred, digits=4))</code></pre>
+        </div>
+      </section>
+
+      <section id="resultados" class="section-block">
+        <h2>6. Resultados & Métricas Comparativas</h2>
+        <p>A avaliação experimental no conjunto de validação com dados de log rotulados apresentou os seguintes resultados:</p>
+
+        <div class="table-responsive">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Modelo Avaliado</th>
+                <th>Acurácia Validação</th>
+                <th>F1-Score (Macro)</th>
+                <th>Tempo de Inferência (ms)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Árvore de Decisão (depth=4)</td>
+                <td>96.2%</td>
+                <td>0.9310</td>
+                <td>0.03 ms</td>
+              </tr>
+              <tr>
+                <td>Random Forest (100 árvores)</td>
+                <td>97.8%</td>
+                <td>0.9520</td>
+                <td>0.88 ms</td>
+              </tr>
+              <tr>
+                <td>XGBoost (lr=0.1)</td>
+                <td>98.3%</td>
+                <td>0.9610</td>
+                <td>1.35 ms</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="recomendacao" class="section-block">
+        <h2>7. Avaliação e Escolha do Modelo</h2>
+        <p>A escolha do modelo ideal depende das restrições de infraestrutura do sistema de monitoramento:</p>
+        <p>• <strong>Se o objetivo for mitigação em tempo real na Borda (Edge / WAF):</strong> A <strong>Árvore de Decisão</strong> destaca-se devido à latência de 0.03ms e facilidade de tradução direta das regras para firewalls.</p>
+        <p>• <strong>Se o objetivo for máxima acurácia em SIEM centralizado:</strong> O <strong>XGBoost</strong> e a <strong>Random Forest</strong> são superiores, reduzindo falsos positivos ao custo de maior consumo computacional.</p>
+      </section>
+
+      <section id="videos" class="section-block">
+        <h2>8. Vídeo Demonstrativo</h2>
+        <figure class="figure-card">
+          <div class="figure-img-placeholder">
+            <i class="ph ph-play-circle" style="font-size: 3.5rem;"></i>
+            <span>[Demonstração: Avaliação dos Modelos e Bloqueio Geográfico via GeoIP]</span>
+          </div>
+          <figcaption class="figure-caption">Vídeo 1: Teste empírico dos modelos e simulação de ataque volumétrico por país.</figcaption>
+        </figure>
+      </section>
+
+      <section id="links" class="section-block">
+        <h2>9. Links Recomendados</h2>
+        <div class="cards-grid">
+          <a href="https://www.maxmind.com/en/geoip2-services-and-databases" target="_blank" class="link-item">
+            <span class="link-title">MaxMind GeoIP2 Databases</span>
+            <span class="link-desc">Bases de dados de geolocalização IP e identificação de ASN para cibersegurança.</span>
+          </a>
+          <a href="https://scikit-learn.org/stable/modules/classes.html" target="_blank" class="link-item">
+            <span class="link-title">Scikit-Learn API Reference</span>
+            <span class="link-desc">Documentação dos algoritmos de classificação e avaliação de métricas.</span>
+          </a>
+          <a href="https://github.com/ViniEduOliveira/project-redes" target="_blank" class="link-item">
+            <span class="link-title">Repositório do Projeto no GitHub</span>
+            <span class="link-desc">Código-fonte completo do benchmark e pipeline de dados.</span>
+          </a>
+        </div>
+      </section>
+
+      <section id="referencias" class="section-block">
+        <h2>10. Referências Bibliográficas</h2>
+        <p>1. MAXMIND. GeoIP2 Precision Services and Database Documentation, 2026.</p>
+        <p>2. BREIMAN, L. Random Forests. Machine Learning, v. 45, n. 1, p. 5-32, 2001.</p>
+        <p>3. CHEN, T.; GUESTRIN, C. XGBoost: A Scalable Tree Boosting System. In: ACM SIGKDD, 2016.</p>
+      </section>
+
+      <section id="autores" class="section-block">
+        <h2>11. Autores do Projeto</h2>
+        <div class="authors-grid">
+          
+          <!-- Vinicius -->
+          <div class="author-card">
+            <div class="author-avatar">
+              <i class="ph ph-user"></i>
+            </div>
+            <div class="author-info">
+              <h4>Vinicius Oliveira</h4>
+              <p class="author-course">Ciência da Computação</p>
+              <div class="author-contact">
+                <a href="https://github.com/ViniEduOliveira" target="_blank" title="GitHub"><i class="ph ph-github-logo"></i></a>
+                <a href="mailto:vinicius.oliveira007@cs.brazcubas.edu.br" title="E-mail"><i class="ph ph-envelope"></i></a>
+                <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Giulia (Ao lado do Vinicius) -->
+          <div class="author-card">
+            <div class="author-avatar">
+              <i class="ph ph-user"></i>
+            </div>
+            <div class="author-info">
+              <h4>Giulia Ayumi</h4>
+              <p class="author-course">Ciência da Computação</p>
+              <div class="author-contact">
+                <a href="https://github.com/giuayumii" target="_blank" title="GitHub"><i class="ph ph-github-logo"></i></a>
+                <a href="mailto:giulia.cardoso006@cs.brazcubas.edu.br" title="E-mail"><i class="ph ph-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/giulia-ayumi-shimada-cardoso-580868338?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" title="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Heitor (Abaixo do Vinicius) -->
+          <div class="author-card">
+            <div class="author-avatar">
+              <i class="ph ph-user"></i>
+            </div>
+            <div class="author-info">
+              <h4>Heitor Estrela</h4>
+              <p class="author-course">Ciência da Computação</p>
+              <div class="author-contact">
+                <a href="https://github.com" target="_blank" title="GitHub"><i class="ph ph-github-logo"></i></a>
+                <a href="mailto:heitor@email.com" title="E-mail"><i class="ph ph-envelope"></i></a>
+                <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gabriel (Ao lado do Heitor) -->
+          <div class="author-card">
+            <div class="author-avatar">
+              <i class="ph ph-user"></i>
+            </div>
+            <div class="author-info">
+              <h4>Gabriel Romão</h4>
+              <p class="author-course">Ciência da Computação</p>
+              <div class="author-contact">
+                <a href="https://github.com" target="_blank" title="GitHub"><i class="ph ph-github-logo"></i></a>
+                <a href="mailto:gabriel@email.com" title="E-mail"><i class="ph ph-envelope"></i></a>
+                <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Miguel (Centralizado em baixo) -->
+          <div class="author-card">
+            <div class="author-avatar">
+              <i class="ph ph-user"></i>
+            </div>
+            <div class="author-info">
+              <h4>Miguel Souza</h4>
+              <p class="author-course">Ciência da Computação</p>
+              <div class="author-contact">
+                <a href="https://github.com" target="_blank" title="GitHub"><i class="ph ph-github-logo"></i></a>
+                <a href="mailto:miguel@email.com" title="E-mail"><i class="ph ph-envelope"></i></a>
+                <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div>Licença MIT | Projeto Integrador de Ciência da Computação - Brazcubas (2026)</div>
+    <div class="footer-links">
+      <span>Última revisão: 18/10/2026</span> | 
+      <a href="https://github.com/ViniEduOliveira/project-redes" target="_blank">Repositório no GitHub</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
