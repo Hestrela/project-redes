@@ -266,6 +266,65 @@ article[id] {
   font-size: 0.98rem;
 }
 
+/* CAIXA DE UPLOAD DO ARQUIVO CSV */
+.csv-upload-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.csv-upload-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.csv-upload-header i {
+  font-size: 2.2rem;
+  color: var(--color-accent);
+}
+
+.csv-upload-header p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.csv-upload-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: #ffffff;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color var(--transition-speed);
+}
+
+.btn-primary:hover {
+  background-color: #0353b4;
+}
+
+.csv-status-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
 /* SLIDER DA SEÇÃO 3 */
 .section-header-flex {
   display: flex;
@@ -586,6 +645,13 @@ article[id] {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
 }
 
+.chart-wrapper {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+
 .figure-img-placeholder {
   width: 100%;
   min-height: 220px;
@@ -718,4 +784,14 @@ article[id] {
 
 .footer-links a:hover {
   text-decoration: underline;
+}
+
+/* ESTILIZAÇÃO DOS DIAGRAMAS VETORIAIS (SVG) */
+.diagram-svg {
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  background-color: #ffffff;
+  border-radius: var(--border-radius);
+  padding: 0.5rem;
 }
