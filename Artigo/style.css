@@ -325,6 +325,16 @@ article[id] {
   font-weight: 500;
 }
 
+/* DIAGRAMAS VETORIAIS (SVG) */
+.diagram-svg {
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  background-color: #ffffff;
+  border-radius: var(--border-radius);
+  padding: 0.5rem;
+}
+
 /* SLIDER DA SEÇÃO 3 */
 .section-header-flex {
   display: flex;
@@ -784,14 +794,4 @@ article[id] {
 
 .footer-links a:hover {
   text-decoration: underline;
-}
-
-/* ESTILIZAÇÃO DOS DIAGRAMAS VETORIAIS (SVG) */
-.diagram-svg {
-  width: 100%;
-  height: auto;
-  max-height: 250px;
-  background-color: #ffffff;
-  border-radius: var(--border-radius);
-  padding: 0.5rem;
 }

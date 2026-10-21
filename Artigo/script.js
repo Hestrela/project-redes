@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   let chartInstance = null;
 
-  // Função para renderizar/atualizar o gráfico com dados
+  // Renderizar o gráfico dinâmico
   function renderChart(labels, baselineData, anomalyData, titleText) {
     const ctx = document.getElementById('geoChart');
     if (!ctx) return;
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         plugins: {
           title: {
             display: true,
-            text: titleText || 'Distribuição Geográfica por Origem (Dados do CSV)',
+            text: titleText || 'Distribuição de Ocorrências (Dados do CSV)',
             color: '#1f2328',
             font: { size: 14, weight: 'bold' }
           },
@@ -52,15 +52,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Dados iniciais padrão de exemplo
+  // Dados iniciais padrão de exemplo do RIPE Atlas
   renderChart(
-    ['Brasil (BR)', 'EUA (US)', 'Portugal (PT)', 'China (CN)', 'Rússia (RU)'],
-    [70, 20, 5, 1, 1],
-    [12, 5, 2, 68, 13],
-    'Exemplo Demonstrativo (Carregue seu CSV acima para ver seus dados)'
+    ['5130', '5080', '5090', '4790'],
+    [52000, 6000, 1200, 800],
+    [65000, 28000, 6000, 3000],
+    'Exemplo Demonstrativo do Dataset (Carregue seu CSV acima para ver os dados exatos)'
   );
 
-  // LEITOR E PARSER DO ARQUIVO CSV
+  // LEITOR E PARSER DO ARQUIVO CSV DEDICADO
   const csvFileInput = document.getElementById('csvFileInput');
   const csvStatusText = document.getElementById('csvStatusText');
   const chartCaptionText = document.getElementById('chartCaptionText');
@@ -88,50 +88,44 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Identificar separador (, ou ;)
     const delimiter = lines[0].includes(';') ? ';' : ',';
     const headers = lines[0].split(delimiter).map(h => h.trim().toLowerCase().replace(/"/g, ''));
 
-    // Procurar coluna de país ou origem
-    let countryColIdx = headers.findIndex(h => 
-      h.includes('country') || h.includes('pais') || h.includes('origin') || 
-      h.includes('dst_country') || h.includes('src_country') || h.includes('iso')
+    let mIdColIdx = headers.findIndex(h => 
+      h.includes('msm_id') || h.includes('measurement_id') || h.includes('id') || h.includes('probe')
     );
 
-    if (countryColIdx === -1) {
-      countryColIdx = 0; // Usar a primeira coluna se não encontrar pelo nome
+    if (mIdColIdx === -1) {
+      mIdColIdx = 0;
     }
 
-    const countryCounts = {};
+    const itemCounts = {};
     let totalRows = 0;
 
     for (let i = 1; i < lines.length; i++) {
       const row = lines[i].split(delimiter).map(cell => cell.trim().replace(/"/g, ''));
-      if (row.length > countryColIdx) {
-        const country = row[countryColIdx] || 'Outros';
-        if (country) {
-          countryCounts[country] = (countryCounts[country] || 0) + 1;
+      if (row.length > mIdColIdx) {
+        const key = row[mIdColIdx] || 'Outros';
+        if (key) {
+          itemCounts[key] = (itemCounts[key] || 0) + 1;
           totalRows++;
         }
       }
     }
 
-    // Ordenar países por maior número de requisições e pegar os Top 6
-    const sortedCountries = Object.entries(countryCounts)
+    const sortedItems = Object.entries(itemCounts)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 6);
 
-    const labels = sortedCountries.map(item => item[0]);
-    const anomalyData = sortedCountries.map(item => item[1]);
-
-    // Simulação do baseline estimado (distribuição normal proporcional)
-    const baselineData = sortedCountries.map((item, idx) => {
+    const labels = sortedItems.map(item => item[0]);
+    const anomalyData = sortedItems.map(item => item[1]);
+    const baselineData = sortedItems.map((item, idx) => {
       return idx === 0 ? Math.round(item[1] * 0.8) : Math.round(item[1] * 0.2);
     });
 
     renderChart(labels, baselineData, anomalyData, `Dados Reais do Arquivo: ${filename}`);
 
-    csvStatusText.textContent = `✓ Sucesso! ${totalRows} registros lidos de "${filename}".`;
+    csvStatusText.textContent = `✓ Sucesso! ${totalRows.toLocaleString('pt-BR')} registros lidos de "${filename}".`;
     if (chartCaptionText) {
       chartCaptionText.textContent = `Figura 1: Distribuição real de tráfego processada a partir do arquivo CSV "${filename}".`;
     }
