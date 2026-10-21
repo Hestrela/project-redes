@@ -2,7 +2,7 @@
 
 Projeto multidisciplinar de Ciência da Computação que integra **Redes de Computadores**, **Estrutura de Dados II** e **Análise e Projeto de Sistemas**. Desenvolvido pelo Grupo 4 com a metodologia **Scrum**.
 
-**Página do projeto:** Página Local
+**Página do projeto:** Página Local (alterar ao subir a página)
 
 **Repositório:** <https://github.com/ViniEduOliveira/project-redes>
 
@@ -53,7 +53,7 @@ Em produção, o sistema conta com um dashboard em tempo real que monitora os IP
 
 - **Google Colab** (Utilizado pelo grupo)
 - **Python:** Python 3
-- **Bibliotecas:** `matplotlib.pyplot`, `FancyBboxPatch`, `Polygon`, `json`, `json`, `time`, `urllib3`, `datetime`, `Pathlib`, `google.colab`, `requests`, `pandas`, `os`, `random`
+- **Bibliotecas:** `matplotlib.pyplot`, `FancyBboxPatch`, `Polygon`, `json`, `time`, `urllib3`, `datetime`, `Pathlib`, `google.colab`, `requests`, `pandas`, `os`, `random`
 
 ### 2. Onde baixar os dados
 
