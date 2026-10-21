@@ -114,4 +114,4 @@ Regras da coleta:
 - Link do RFC: https://github.com/ViniEduOliveira/project-redes/blob/main/Memorando_de_Decisao_grupo4.md
 - Link do dicionário v0.1: https://github.com/ViniEduOliveira/project-redes/blob/main/metadados/etapa%202/baseline_por_fluxo.csv
 - Link dos commits: https://github.com/ViniEduOliveira/project-redes/commits/main/
-- Link de `data/raw/` e do `config/`: O link do data Raw não está disponível para pessoas de fora do projeto, ao executar ele gera os arquivos no drive pessoal.
+- Link de `data/raw/` e do `config/`: O link do data Raw não está disponível para pessoas de fora do projeto, ao executar os arquivos são gerados no drive pessoal.
