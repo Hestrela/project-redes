@@ -6,7 +6,7 @@
 
 **Equipe:Grupo 4**  
 **Integrantes:Vinicius Eduardo Santos de Oliveira, Giulia Ayumi Shimada Cardoso, Heitor Estrela de Andrade, Gabriel Romão da Silva, Miguel Augusto da Costa Souza**  
-**Scrum Master da tarefa:**  
+**Scrum Master da tarefa: Vinicius Eduardo Santos de Oliveira**  
 **Repositório GitHub: https://github.com/ViniEduOliveira/project-redes**
 
 > Esta tarefa entrega o problema e o **dado cru**. Não há classe OK, RISCO ou FALHA. Não há baseline, não há mediana e não há árvore. Quem rotular aqui mistura a coleta com a decisão da Tarefa 2.
@@ -40,7 +40,7 @@ Responder no diário. A resposta tem de bater com o RFC.
 | Quem usa o alerta? | Quem opera o enlace: investigar (FALHA), observar (RISCO) ou não agir (OK). |
 | O que está proibido como definição de falha? | Limiar global de RTT, país, continente ou nome da rota. |
 
-- [ ] RFC do grupo preenchido a partir desta tabela
+- [x] RFC do grupo preenchido a partir desta tabela
 - [x] Dicionário v0.1 só com variáveis brutas
 
 ## 2. O que coletar (e o que não criar)
@@ -91,8 +91,8 @@ Regras da coleta:
 
 ## 4. Scrum
 
-- [ ] Product Owner = docente; Scrum Master da tarefa; time de desenvolvimento
-- [ ] Board com To do / Doing / Done
+- [x] Product Owner = docente; Scrum Master da tarefa; time de desenvolvimento
+- [x] Board com To do / Doing / Done
 - [ ] Pelo menos 3 histórias: coletar fluxos diversos; preservar o bruto com timeout; separar Período A e Período B sem rotular
 
 **Histórias:**  
@@ -106,23 +106,12 @@ Regras da coleta:
 
 | Integrante | O que fiz nesta tarefa | Dificuldades | O que pretendo manter/ajustar |
 |---|---|---|---|
-| | | | |
+
+| [Miguel Augusto da Costa Souza] | Adicionei ao projeto os arquivos que faltavam (organizei as tarefas na pasta `Tarefas`) e preenchi o diário da Tarefa 1 com as informações que o grupo tinha disponíveis no repositório. O que não existia ou não pôde ser confirmado, deixei em branco em vez de inventar. | Entender o que o diário pedia e o que era da Tarefa 1 e o que era das tarefas seguintes. | Manter o diário preenchido só com o que dá para comprovar. Ajustar a coleta para a próxima entrega: adicionar o `requirements.txt` |
 
 ## 6. Evidências gerais
 
-- Link do RFC:
-- Link do dicionário v0.1:
-- Link dos commits:
-- Link de `data/raw/` e do `config/`:
-
----
-
-## Rubrica — Tarefa 1 (0 a 4,0)
-
-| Critério | Peso | Nota máxima | Nota | Observações |
-|---|---|---|---|---|
-| Problema | 0,5 | Fluxo, unidade de análise e proibição de RTT absoluto como falha estão explícitos | | |
-| Coleta bruta | 1,5 | Vários fluxos (curto e longo), timeout preservado, RTT vazio ≠ 0, config externa, bruto intocável | | |
-| Período A e Período B sem rótulo | 1,0 | Dois blocos sem sobreposição; relatório de qualidade **sem** classe | | |
-| Scrum + diário | 1,0 | Papéis, board, histórias e diário de todos | | |
-| **Total** | **4,0** | | **___ / 4,0** | |
+- Link do RFC: https://github.com/ViniEduOliveira/project-redes/blob/main/Memorando_de_Decisao_grupo4.md
+- Link do dicionário v0.1: https://github.com/ViniEduOliveira/project-redes/blob/main/metadados/etapa%202/baseline_por_fluxo.csv
+- Link dos commits: https://github.com/ViniEduOliveira/project-redes/commits/main/
+- Link de `data/raw/` e do `config/`: O link do data Raw não está disponível para pessoas de fora do projeto, ao executar ele gera os arquivos no drive pessoal.
