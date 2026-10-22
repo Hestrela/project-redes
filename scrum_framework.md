@@ -205,7 +205,7 @@ flowchart LR
 | **US05** | Perda e valores ausentes | Redes | Alta | 3 | 2 | ⏳ In Progress |
 | **US06** | Normalização temporal | Estrutura de Dados II | Média | 2 | 2 | ⏳ In Progress |
 | **US07** | Tipagem e higienização | Estrutura de Dados II | Média | 3 | 2 | 📋 To Do |
-| **US08** | Exportação Parquet (`processed`) | Estrutura de Dados II | Alta | 2 | 2 | 📋 To Do |
+| **US08** | Exportação CSV (`processed`) | Estrutura de Dados II | Alta | 2 | 2 | 📋 To Do |
 | **US09** | Janelas e latência média | Redes | Alta | 5 | 3 | 📋 To Do |
 | **US10** | Jitter | Redes | Alta | 5 | 3 | 📋 To Do |
 | **US11** | Taxa de perda por janela | Redes | Alta | 3 | 4 | 📋 To Do |
