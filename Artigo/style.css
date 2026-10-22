@@ -1,5 +1,4 @@
 :root {
-  /* PALETA TEMA CLARO */
   --bg-primary: #f6f8fa;
   --bg-secondary: #ffffff;
   --bg-card: #ffffff;
@@ -13,7 +12,6 @@
 
   --text-main: #1f2328;
   --text-muted: #636c76;
-  --text-hover: #0969da;
 
   --color-accent: #0969da;
   --color-ok: #1a7f37;
@@ -45,6 +43,7 @@ article[id] {
   scroll-margin-top: 80px;
 }
 
+/* HEADER SUPERIOR */
 .top-header {
   height: 60px;
   background-color: var(--bg-secondary);
@@ -68,11 +67,6 @@ article[id] {
   color: var(--color-accent);
 }
 
-.header-links {
-  display: flex;
-  gap: 1.5rem;
-}
-
 .header-links a {
   color: var(--text-muted);
   text-decoration: none;
@@ -85,6 +79,7 @@ article[id] {
   color: var(--color-accent);
 }
 
+/* LAYOUT E SIDEBAR TÓPICOS */
 .layout-container {
   display: flex;
   flex: 1;
@@ -160,9 +155,6 @@ article[id] {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 .sidebar-toc.collapsed .toc-nav {
@@ -192,6 +184,7 @@ article[id] {
   font-size: 0.82rem;
 }
 
+/* CONTEÚDO PRINCIPAL DO ARTIGO */
 .article-content {
   flex: 1;
   max-width: 960px;
@@ -266,65 +259,6 @@ article[id] {
   font-size: 0.98rem;
 }
 
-/* CAIXA DE UPLOAD DO ARQUIVO CSV */
-.csv-upload-box {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
-}
-
-.csv-upload-header {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-}
-
-.csv-upload-header i {
-  font-size: 2.2rem;
-  color: var(--color-accent);
-}
-
-.csv-upload-header p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.csv-upload-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.btn-primary {
-  background-color: var(--color-accent);
-  color: #ffffff;
-  padding: 0.55rem 1.1rem;
-  border-radius: var(--border-radius);
-  font-weight: 600;
-  font-size: 0.88rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: background-color var(--transition-speed);
-}
-
-.btn-primary:hover {
-  background-color: #0353b4;
-}
-
-.csv-status-text {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
 /* DIAGRAMAS VETORIAIS (SVG) */
 .diagram-svg {
   width: 100%;
@@ -335,7 +269,7 @@ article[id] {
   padding: 0.5rem;
 }
 
-/* SLIDER DA SEÇÃO 3 */
+/* SLIDER DA SEÇÃO DE MODELOS */
 .section-header-flex {
   display: flex;
   justify-content: space-between;
@@ -406,7 +340,7 @@ article[id] {
   margin-bottom: 0.5rem;
 }
 
-/* QUADRO COMPARATIVO (SEÇÃO 4) */
+/* QUADRO COMPARATIVO */
 .compare-filter-bar {
   display: flex;
   gap: 0.4rem;
@@ -451,7 +385,6 @@ article[id] {
   padding: 1rem 1.2rem;
   border: 1px solid var(--border-color);
   vertical-align: top;
-  transition: background-color var(--transition-speed);
 }
 
 .col-criterion {
@@ -473,16 +406,6 @@ article[id] {
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--color-accent);
-}
-
-.model-header-cell i {
-  font-size: 1.2rem;
-}
-
-.modern-compare-table td.col-dt:hover,
-.modern-compare-table td.col-rf:hover,
-.modern-compare-table td.col-xgb:hover {
-  background-color: rgba(9, 105, 218, 0.04);
 }
 
 .check-text {
@@ -535,7 +458,7 @@ article[id] {
   border: 1px solid #54aafd;
 }
 
-/* AUTORES COM DISPOSIÇÃO EM GRID DE 2 COLUNAS + MIGUEL CENTRALIZADO */
+/* CARDS DOS AUTORES COM IMAGENS */
 .authors-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -552,18 +475,14 @@ article[id] {
   gap: 1.25rem;
   transition: transform var(--transition-speed) ease,
               box-shadow var(--transition-speed) ease,
-              border-color var(--transition-speed) ease,
-              background-color var(--transition-speed) ease;
-  cursor: pointer;
-  position: relative;
+              border-color var(--transition-speed) ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
 }
 
 .author-card:hover {
-  transform: translateY(-6px) scale(1.03);
+  transform: translateY(-6px);
   border-color: var(--color-accent);
   box-shadow: 0 10px 25px rgba(9, 105, 218, 0.12);
-  background-color: #ffffff;
 }
 
 .author-card:nth-child(5) {
@@ -585,7 +504,6 @@ article[id] {
   justify-content: center;
   font-size: 1.8rem;
   color: var(--color-accent);
-  transition: border-color var(--transition-speed) ease;
   overflow: hidden;
 }
 
@@ -593,10 +511,6 @@ article[id] {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.author-card:hover .author-avatar {
-  border-color: var(--color-accent);
 }
 
 .author-info {
@@ -625,24 +539,14 @@ article[id] {
 .author-contact a {
   color: var(--text-muted);
   font-size: 1.15rem;
-  transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
-  text-decoration: none;
+  transition: color var(--transition-speed) ease;
 }
 
 .author-contact a:hover {
   color: var(--color-accent);
-  transform: translateY(-2px);
 }
 
-@media (max-width: 650px) {
-  .authors-grid {
-    grid-template-columns: 1fr;
-  }
-  .author-card:nth-child(5) {
-    max-width: 100%;
-  }
-}
-
+/* CARDS DE VÍDEO, TABELAS E BLOCOS DE CÓDIGO */
 .figure-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -653,13 +557,6 @@ article[id] {
   align-items: center;
   gap: 0.75rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
-}
-
-.chart-wrapper {
-  width: 100%;
-  max-width: 650px;
-  margin: 0 auto;
-  padding: 0.5rem;
 }
 
 .figure-img-placeholder {
@@ -694,18 +591,15 @@ article[id] {
   background-color: var(--bg-card);
 }
 
-.compare-table th {
-  background-color: #f8fafc;
-  color: var(--text-main);
+.compare-table th,
+.compare-table td {
   padding: 0.85rem 1rem;
   border: 1px solid var(--border-color);
 }
 
-.compare-table td {
-  padding: 0.85rem 1rem;
-  border: 1px solid var(--border-color);
-  color: #334155;
-  vertical-align: top;
+.compare-table th {
+  background-color: #f8fafc;
+  color: var(--text-main);
 }
 
 .code-block {
@@ -773,6 +667,7 @@ article[id] {
   font-size: 0.85rem;
 }
 
+/* RODAPÉ DO SITE */
 .site-footer {
   background-color: var(--bg-secondary);
   border-top: 1px solid var(--border-color);
@@ -794,4 +689,14 @@ article[id] {
 
 .footer-links a:hover {
   text-decoration: underline;
+}
+
+/* ADAPTAÇÃO PARA DISPOSITIVOS MÓVEIS */
+@media (max-width: 650px) {
+  .authors-grid {
+    grid-template-columns: 1fr;
+  }
+  .author-card:nth-child(5) {
+    max-width: 100%;
+  }
 }

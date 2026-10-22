@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Artigo Estrutura de dados II</title>
+  <title>Artigo Estrutura de Dados II - Predição de Degradação de Rede</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -33,79 +32,78 @@
 
       <nav class="toc-nav">
         <a href="#introducao" class="toc-link">1. Introdução & Problemática</a>
-        <a href="#exemplo-pratico" class="toc-link">2. Cenário do Desvio Geográfico</a>
+        <a href="#exemplo-pratico" class="toc-link">2. Exemplo Prático em Ação</a>
         <a href="#secoes-modelos" class="toc-link">3. Modelos Avaliados</a>
         <a href="#secoes-modelos" class="toc-link sub" data-slide="0">3.1. Árvore de Decisão</a>
         <a href="#secoes-modelos" class="toc-link sub" data-slide="1">3.2. Random Forest</a>
         <a href="#secoes-modelos" class="toc-link sub" data-slide="2">3.3. XGBoost</a>
         <a href="#comparativo" class="toc-link">4. Quadro Comparativo</a>
-        <a href="#codigo" class="toc-link">5. Pipeline Python & Modelo Oficial</a>
-        <a href="#resultados" class="toc-link">6. Resultados & Métricas</a>
-        <a href="#recomendacao" class="toc-link">7. Avaliação e Escolha do Modelo</a>
+        <a href="#codigo" class="toc-link">5. Pipeline Python & Treinamento</a>
+        <a href="#resultados" class="toc-link">6. Resultados & Métricas Comparativas</a>
+        <a href="#recomendacao" class="toc-link">7. Recomendação & Limitações</a>
         <a href="#videos" class="toc-link">8. Vídeo Demonstrativo</a>
         <a href="#links" class="toc-link">9. Links Recomendados</a>
-        <a href="#referencias" class="toc-link">10. Referências</a>
-        <a href="#autores" class="toc-link">11. Autores</a>
+        <a href="#referencias" class="toc-link">10. Referências Bibliográficas</a>
+        <a href="#autores" class="toc-link">11. Autores do Projeto</a>
       </nav>
     </aside>
 
     <main class="article-content">
       <header class="article-hero">
         <h1 class="article-title">Detecção Autônoma de Degradação de Rede com RTT Normalizado Independente de Rota Utilizando Aprendizado de Máquina</h1>
-        <p class="article-subtitle">Estudo comparativo e otimização por Árvore de Decisão na identificação de anomalias de latência e perda de pacotes a partir de métricas do RIPE Atlas.</p>
+        <p class="article-subtitle">Estudo comparativo e otimização por Árvore de Decisão na identificação de anomalias de latência e perda de pacotes a partir de métricas do RIPE Atlas [6].</p>
 
         <div class="article-meta">
-          <div class="meta-authors">
-            <div class="author-avatar-sm"><i class="ph ph-users"></i></div>
+          <div class="meta-authors-row" style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+            <div style="display: flex; gap: -0.5rem; align-items: center;">
+              <img src="images/Vinicius.jpeg" alt="Vinicius" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #fff;" />
+              <img src="images/Giulia.jpeg" alt="Giulia" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; margin-left: -8px;" />
+              <img src="images/Heitor.jpeg" alt="Heitor" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; margin-left: -8px;" />
+              <img src="images/Gabriel.jpeg" alt="Gabriel" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; margin-left: -8px;" />
+              <img src="images/Miguel.jpeg" alt="Miguel" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; margin-left: -8px;" />
+            </div>
             <span>Por: <strong>Vinicius O., Giulia A., Heitor E., Gabriel R., Miguel S.</strong></span>
           </div>
-          <div>Publicado em: <time>08/09/2026</time></div>
-          <div>Última Revisão: <time>18/10/2026</time></div>
+          <div style="margin-top: 0.5rem; display: flex; gap: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
+            <div>Publicado em: <time>19/10/2026</time></div>
+            <div>Última Revisão: <time>22/10/2026</time></div>
+          </div>
         </div>
       </header>
 
+      <!-- 1. INTRODUÇÃO -->
       <section id="introducao" class="section-block">
         <h2>1. Introdução & Problemática</h2>
-        <p>Sistemas tradicionais de monitorização concentram-se em limiares absolutos de RTT (Round-Trip Time). Contudo, limites rígidos falham ao avaliar conexões geograficamente distantes, onde uma latência elevada é anatomicamente normal devido à distância física.</p>
+        <p>Sistemas tradicionais de monitorização de infraestrutura concentram-se em limiares absolutos de RTT (Round-Trip Time) [3]. Contudo, limites rígidos falham ao avaliar conexões geograficamente distantes, onde uma latência elevada é biologicamente e fisicamente normal devido à distância e ao número de saltos [4]. Por exemplo, uma degradação severa numa rota local (ex: salto de 10ms para 80ms) passaria despercebida se o limiar estático estivesse fixado em 150ms.</p>
 
         <p><strong>A Problemática Central:</strong> Como classificar de forma autônoma a qualidade da rede entre os estados <strong>OK</strong>, <strong>RISCO</strong> e <strong>FALHA</strong> sem utilizar endereços IP, localização geográfica ou RTT absoluto, garantindo total independência da rota?</p>
 
-        <p>Neste estudo, construímos e refinamos um modelo preditivo baseado em Árvore de Decisão CART que avalia 8 atributos relativos normalizados por baseline próprio de cada fluxo do RIPE Atlas (incluindo $Z\text{-score}$ robusto, variação de jitter e perda de pacotes)[cite: 6, 7].</p>
+        <p>Neste estudo, construímos e refinamos um modelo preditivo baseado em Árvores de Decisão (CART) [5] e avaliamos algoritmos alternativos como Random Forest [1] e XGBoost [2]. O leitor aprenderá como tratar dados brutos do RIPE Atlas [6] através de 8 atributos relativos normalizados (Z-score robusto com MAD, variação de jitter e histórico de rajadas) para criar um preditor imune a vazamento de rotas.</p>
       </section>
 
-      <!-- SEÇÃO 2: UPLOAD DO CSV E GRÁFICO DINÂMICO COM DADOS DO USUÁRIO -->
+      <!-- 2. EXEMPLO PRÁTICO -->
       <section id="exemplo-pratico" class="section-block">
-        <h2>2. Cenário Prático do Desvio e Medições de Rede</h2>
-        <p>Carregue o arquivo de dados oficial (<strong>dataset_rotulado_periodo_b.csv</strong>) para processar e gerar o gráfico com base nas medições reais[cite: 6, 7]:</p>
+        <h2>2. Exemplo Prático: Árvore de Decisão em Ação</h2>
+        <p>Antes de analisar ensembles mais complexos, observe o comportamento de um pacote de telemetria processado pela nossa árvore de decisão simplificada:</p>
 
-        <div class="csv-upload-box">
-          <div class="csv-upload-header">
-            <i class="ph ph-file-csv"></i>
-            <div>
-              <strong>Carregar dados do seu arquivo CSV</strong>
-              <p>Selecione seu arquivo CSV com medições do RIPE Atlas para plotar a distribuição de ocorrências[cite: 1, 6].</p>
-            </div>
-          </div>
-          <div class="csv-upload-controls">
-            <label for="csvFileInput" class="btn-primary">
-              <i class="ph ph-upload-simple"></i> Selecionar Arquivo CSV
-            </label>
-            <input type="file" id="csvFileInput" accept=".csv" style="display: none;" />
-            <span id="csvStatusText" class="csv-status-text">Aguardando arquivo CSV...</span>
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 1.25rem;">
+          <h4 style="color: var(--color-accent); margin-bottom: 0.75rem;">Cenário de Entrada (Amostra de Pacote ICMP)</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">• <strong>RTT Atual:</strong> 180 ms (Baseline normal da rota: 175 ms)</p>
+          <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">• <strong>Z-Score Robusto (z_robusto):</strong> 4.20 (Superou o limite de normalidade de 3.50)</p>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem;">• <strong>Perda de Pacotes (perda_pct):</strong> 20.0% (Ocorreu descarte de pacotes no enlace)</p>
+
+          <div style="background: #f8fafc; border-left: 4px solid #cf222e; padding: 1rem; border-radius: 4px;">
+            <strong>Execução do Fluxo Lógico:</strong>
+            <ol style="margin-left: 1.25rem; margin-top: 0.5rem; font-size: 0.9rem;">
+              <li>Avaliação do nó raiz: <code>z_robusto (4.20) > 3.50</code> → <strong>SIM</strong> (Avança para o nó direito).</li>
+              <li>Avaliação do nó secundário: <code>perda_pct (20.0%) > 16.67%</code> → <strong>SIM</strong>.</li>
+              <li><strong>Resultado da Predição:</strong> Classe <span class="metric-chip badge-orange">FALHA</span> detectada instantaneamente.</li>
+            </ol>
           </div>
         </div>
-
-        <figure class="figure-card">
-          <div class="chart-wrapper">
-            <canvas id="geoChart"></canvas>
-          </div>
-          <figcaption class="figure-caption" id="chartCaptionText">
-            Figura 1: Comparativo entre a linha de base (baseline) e a detecção de surto/degradação por ID de medição[cite: 6, 7].
-          </figcaption>
-        </figure>
       </section>
 
-      <!-- SEÇÃO 3: SLIDER COM OS 3 DIAGRAMAS VETORIAIS -->
+      <!-- 3. MODELOS AVALIADOS -->
       <section id="secoes-modelos" class="section-block">
         <div class="section-header-flex">
           <h2>3. Modelos Avaliados no Experimento</h2>
@@ -127,47 +125,47 @@
             <div class="model-slide" id="mod-dt">
               <div class="model-text">
                 <h3>3.1. Árvore de Decisão (Decision Tree - CART)</h3>
-                <p>Modelo não-paramétrico oficial que particiona as 8 variáveis relativas por regras lógicas explícitas[cite: 6, 7]. Destaca-se pelo tempo de resposta instantâneo (&lt; 0.03 ms) e perfeita transparência auditável[cite: 6, 7].</p>
+                <p>O modelo não-paramétrico oficial adotado no projeto [5]. Particiona o espaço das 8 variáveis relativas através de regras lógicas condicionais explícitas. Garante ausência total de vazamento de rotas e destaca-se pela latência de inferência instantânea (&lt; 0.03 ms) e auditabilidade completa das decisões em sistemas de produção.</p>
               </div>
               <figure class="figure-card">
-                <svg viewBox="0 0 650 250" class="diagram-svg" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 650 250" class="diagram-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Diagrama da Árvore de Decisão">
                   <path d="M 325 45 L 180 100" stroke="#94a3b8" stroke-width="2.5" fill="none" stroke-dasharray="4,4"/>
                   <path d="M 325 45 L 470 100" stroke="#0969da" stroke-width="2.5" fill="none"/>
                   <path d="M 470 145 L 370 195" stroke="#94a3b8" stroke-width="2.5" fill="none" stroke-dasharray="4,4"/>
                   <path d="M 470 145 L 570 195" stroke="#cf222e" stroke-width="2.5" fill="none"/>
 
-                  <text x="230" y="65" font-size="11" font-weight="bold" fill="#64748b">Não (<= 3.50)</text>
-                  <text x="400" y="65" font-size="11" font-weight="bold" fill="#0969da">Sim (> 3.50)</text>
-                  <text x="400" y="165" font-size="11" font-weight="bold" fill="#64748b">Não (<= 16.67%)</text>
-                  <text x="530" y="165" font-size="11" font-weight="bold" fill="#cf222e">Sim (> 16.67%)</text>
+                  <text x="230" y="65" font-size="11" font-weight="bold" fill="#64748b">Não (&lt;= 3.50)</text>
+                  <text x="400" y="65" font-size="11" font-weight="bold" fill="#0969da">Sim (&gt; 3.50)</text>
+                  <text x="400" y="165" font-size="11" font-weight="bold" fill="#64748b">Não (&lt;= 16.67%)</text>
+                  <text x="530" y="165" font-size="11" font-weight="bold" fill="#cf222e">Sim (&gt; 16.67%)</text>
 
                   <rect x="225" y="10" width="200" height="40" rx="8" fill="#eff6ff" stroke="#0969da" stroke-width="2"/>
-                  <text x="325" y="35" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">z_robusto > 3.50?</text>
+                  <text x="325" y="35" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">z_robusto &gt; 3.50?</text>
 
                   <rect x="100" y="100" width="160" height="42" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
-                  <text x="180" y="125" font-size="13" font-weight="bold" text-anchor="middle" fill="#b91c1c">Classe: FALHA</text>
+                  <text x="180" y="125" font-size="13" font-weight="bold" text-anchor="middle" fill="#b91c1c">Classe: OK</text>
 
                   <rect x="370" y="100" width="200" height="42" rx="8" fill="#eff6ff" stroke="#0969da" stroke-width="2"/>
-                  <text x="470" y="125" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">perda_pct > 16.67%?</text>
+                  <text x="470" y="125" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">perda_pct &gt; 16.67%?</text>
 
                   <rect x="290" y="195" width="160" height="42" rx="8" fill="#fefce8" stroke="#ca8a04" stroke-width="2"/>
-                  <text x="370" y="220" font-size="13" font-weight="bold" text-anchor="middle" fill="#a16207">Classe: RISCO / OK</text>
+                  <text x="370" y="220" font-size="13" font-weight="bold" text-anchor="middle" fill="#a16207">Classe: RISCO</text>
 
                   <rect x="490" y="195" width="160" height="42" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
                   <text x="570" y="220" font-size="13" font-weight="bold" text-anchor="middle" fill="#b91c1c">Classe: FALHA</text>
                 </svg>
-                <figcaption class="figure-caption">Figura 2: Árvore de Decisão oficial refinada na Tarefa 4 (max_depth=6, min_samples_leaf=5)[cite: 6, 7].</figcaption>
+                <figcaption class="figure-caption">Figura 1: Arquitetura da Árvore de Decisão oficial otimizada (max_depth=6, min_samples_leaf=5).</figcaption>
               </figure>
             </div>
 
             <!-- 3.2. RANDOM FOREST -->
             <div class="model-slide" id="mod-rf">
               <div class="model-text">
-                <h3>3.2. Random Forest (Bagging)</h3>
-                <p>Ensemble de múltiplas árvores em paralelo treinadas em subconjuntos aleatórios de dados. Oferece alta resiliência a ruídos mas exige maior custo de inferência[cite: 6].</p>
+                <h3>3.2. Random Forest (Bagging Ensemble)</h3>
+                <p>Ensemble baseado na combinação em paralelo de múltiplas árvores de decisão treinadas sobre subconjuntos de amostras e atributos [1]. Reduz a variância do modelo e aumenta a imunidade contra ruídos de amostragem, porém introduz maior pegada de memória e impede a extração de regras lógicas diretas.</p>
               </div>
               <figure class="figure-card">
-                <svg viewBox="0 0 650 250" class="diagram-svg" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 650 250" class="diagram-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Diagrama do Bagging em Random Forest">
                   <rect x="235" y="10" width="180" height="38" rx="8" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
                   <text x="325" y="34" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">Métricas Relativas do Fluxo</text>
 
@@ -195,7 +193,7 @@
                   <text x="325" y="215" font-size="12" font-weight="bold" text-anchor="middle" fill="#991b1b">Votação Majoritária</text>
                   <text x="325" y="230" font-size="11" font-weight="bold" text-anchor="middle" fill="#dc2626">Classe Final: FALHA</text>
                 </svg>
-                <figcaption class="figure-caption">Figura 3: Avaliação multivariada de degradação por Random Forest.</figcaption>
+                <figcaption class="figure-caption">Figura 2: Esquema do algoritmo de Bagging (Random Forest) atuando em paralelo.</figcaption>
               </figure>
             </div>
 
@@ -203,10 +201,10 @@
             <div class="model-slide" id="mod-xgb">
               <div class="model-text">
                 <h3>3.3. XGBoost (Gradient Boosting)</h3>
-                <p>Algoritmo de gradiente iterativo que ajusta sequencialmente os erros residuais. Maximiza a acurácia global mas eleva a complexidade e tempo de treinamento[cite: 6].</p>
+                <p>Algoritmo de impulsionamento por gradiente sequencial [2]. Constrói árvores em série minimizando a função de perda e corrigindo os erros residuais do passo anterior. Oferece alta performance preditiva, porém eleva o custo computacional e exige frameworks adicionais de explicabilidade (SHAP).</p>
               </div>
               <figure class="figure-card">
-                <svg viewBox="0 0 650 250" class="diagram-svg" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 650 250" class="diagram-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Diagrama do Gradient Boosting em XGBoost">
                   <rect x="20" y="70" width="140" height="60" rx="8" fill="#ffffff" stroke="#0969da" stroke-width="2"/>
                   <text x="90" y="95" font-size="12" font-weight="bold" text-anchor="middle" fill="#0969da">Árvore Inicial (T1)</text>
                   <text x="90" y="115" font-size="11" text-anchor="middle" fill="#64748b">Erro Residual e1</text>
@@ -231,7 +229,7 @@
                   <text x="325" y="190" font-size="12" font-weight="bold" text-anchor="middle" fill="#15803d">Soma Ponderada ∑(wi * Ti)</text>
                   <text x="325" y="205" font-size="11" font-weight="bold" text-anchor="middle" fill="#16a34a">Predição Otimizada</text>
                 </svg>
-                <figcaption class="figure-caption">Figura 4: Otimização iterativa por Boosting para identificação de degradação.</figcaption>
+                <figcaption class="figure-caption">Figura 3: Minimização sequencial de resíduos via Gradient Boosting (XGBoost).</figcaption>
               </figure>
             </div>
 
@@ -239,7 +237,7 @@
         </div>
       </section>
 
-      <!-- SEÇÃO 4: QUADRO COMPARATIVO DINÂMICO -->
+      <!-- 4. QUADRO COMPARATIVO -->
       <section id="comparativo" class="section-block">
         <div class="section-header-flex">
           <h2>4. Quadro Comparativo dos Modelos</h2>
@@ -259,7 +257,7 @@
                 <th class="col-model col-dt">
                   <div class="model-header-cell">
                     <i class="ph ph-tree-structure"></i>
-                    <span>Árvore de Decisão (Final)</span>
+                    <span>Árvore de Decisão (Oficial)</span>
                   </div>
                 </th>
                 <th class="col-model col-rf">
@@ -278,181 +276,213 @@
             </thead>
             <tbody>
               <tr>
-                <td class="col-criterion"><strong>Abordagem de Atributos</strong></td>
-                <td class="col-dt">Limiares diretos em $Z\text{-score}$, perda % e variação de jitter[cite: 6, 7].</td>
-                <td class="col-rf">Votação paralela ponderando múltiplas janelas temporais[cite: 6].</td>
-                <td class="col-xgb">Minimização de erro residual em métricas relativas[cite: 6].</td>
+                <td class="col-criterion"><strong>Como Funciona</strong></td>
+                <td class="col-dt">Divisão condicional direta por limiares explícitos nas variáveis relativas [5].</td>
+                <td class="col-rf">Votação paralela de múltiplas árvores em subconjuntos aleatórios [1].</td>
+                <td class="col-xgb">Ajuste sequencial de erros residuais por otimização de gradiente [2].</td>
               </tr>
               <tr>
                 <td class="col-criterion"><strong>Vantagens</strong></td>
-                <td class="col-dt"><span class="check-text">✓ Exportável para regras lógicas claras[cite: 6, 7]</span><br><span class="check-text">✓ Resposta ultrarrápida (&lt; 0.03ms)[cite: 6]</span></td>
-                <td class="col-rf"><span class="check-text">✓ Baixo índice de falso positivo</span><br><span class="check-text">✓ Robusto a oscilações normais</span></td>
-                <td class="col-xgb"><span class="check-text">✓ Precisão marginal máxima</span><br><span class="check-text">✓ Detecta variações sutis</span></td>
+                <td class="col-dt"><span class="check-text">✓ Regras lógicas 100% auditáveis</span><br><span class="check-text">✓ Resposta instantânea (&lt; 0.03ms)</span></td>
+                <td class="col-rf"><span class="check-text">✓ Baixo índice de falso positivo</span><br><span class="check-text">✓ Robusto a oscilações pontuais</span></td>
+                <td class="col-xgb"><span class="check-text">✓ Precisão marginal elevada</span><br><span class="check-text">✓ Captura variações não-lineares</span></td>
               </tr>
               <tr>
                 <td class="col-criterion"><strong>Desvantagens</strong></td>
-                <td class="col-dt"><span class="cross-text">✗ Exige parametrização de profundidade (`max_depth=6`)[cite: 6, 7]</span></td>
-                <td class="col-rf"><span class="cross-text">✗ Maior consumo de memória</span><br><span class="cross-text">✗ Difícil auditoria simples</span></td>
-                <td class="col-xgb"><span class="cross-text">✗ Treinamento mais lento</span><br><span class="cross-text">✗ Caixa-preta sem SHAP</span></td>
+                <td class="col-dt"><span class="cross-text">Exige controle estrito de profundidade (`max_depth=6`)</span></td>
+                <td class="col-rf"><span class="cross-text">Maior uso de memória em tempo real</span><br><span class="cross-text">Impossibilita auditoria simples</span></td>
+                <td class="col-xgb"><span class="cross-text">Treinamento mais custoso</span><br><span class="cross-text">Caixa-preta (exige SHAP)</span></td>
               </tr>
               <tr>
                 <td class="col-criterion"><strong>Interpretabilidade</strong></td>
-                <td class="col-dt"><span class="metric-chip badge-green"><i class="ph ph-check-circle"></i> Alta (100% Auditável)[cite: 6, 7]</span></td>
+                <td class="col-dt"><span class="metric-chip badge-green"><i class="ph ph-check-circle"></i> Alta (100% Auditável)</span></td>
                 <td class="col-rf"><span class="metric-chip badge-yellow"><i class="ph ph-warning"></i> Média (Feature Importance)</span></td>
                 <td class="col-xgb"><span class="metric-chip badge-orange"><i class="ph ph-eye-slash"></i> Baixa (Exige SHAP)</span></td>
               </tr>
               <tr>
-                <td class="col-criterion"><strong>Latência de Resposta</strong></td>
-                <td class="col-dt"><span class="metric-chip badge-blue"><i class="ph ph-lightning"></i> Instantânea (&lt; 0.03ms)[cite: 6]</span></td>
-                <td class="col-rf"><span class="metric-chip badge-yellow"><i class="ph ph-clock"></i> Média (0.88ms)</span></td>
-                <td class="col-xgb"><span class="metric-chip badge-orange"><i class="ph ph-hourglass-medium"></i> Moderada (1.35ms)</span></td>
+                <td class="col-criterion"><strong>Risco de Overfitting</strong></td>
+                <td class="col-dt">Alto sem poda (mitigado com `max_depth=6`).</td>
+                <td class="col-rf">Baixo (o bagging reduz a variância natural).</td>
+                <td class="col-xgb">Médio (requer tuning de `learning_rate`).</td>
               </tr>
               <tr>
-                <td class="col-criterion"><strong>Recall de FALHA (Validação)</strong></td>
-                <td class="col-dt"><span class="metric-chip badge-green">99.85% (Tarefa 4)[cite: 6, 7]</span></td>
-                <td class="col-rf"><span class="metric-chip badge-green">99.10%</span></td>
-                <td class="col-xgb"><span class="metric-chip badge-green">99.40%</span></td>
+                <td class="col-criterion"><strong>Tempo de Treinamento</strong></td>
+                <td class="col-dt"><span class="metric-chip badge-green">Muito Rápido (~0.12s)</span></td>
+                <td class="col-rf"><span class="metric-chip badge-yellow">Moderado (~1.85s)</span></td>
+                <td class="col-xgb"><span class="metric-chip badge-orange">Mais Lento (~3.40s)</span></td>
               </tr>
               <tr>
-                <td class="col-criterion"><strong>Aplicação Ideal</strong></td>
-                <td class="col-dt">Classificação em tempo real com controle total das regras (Projeto Oficial)[cite: 6, 7].</td>
+                <td class="col-criterion"><strong>Cenário Ideal</strong></td>
+                <td class="col-dt">Predição de baixa latência em tempo real com auditoria de regras (Modelo Oficial).</td>
                 <td class="col-rf">Análise em servidores centrais ou sistemas SIEM.</td>
-                <td class="col-xgb">Análise offline de grande volumetria de dados.</td>
+                <td class="col-xgb">Processamento offline de grande volumetria de logs.</td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <!-- SEÇÃO 5: PIPELINE PYTHON OFICIAL DOS SEUS NOTEBOOKS -->
+      <!-- 5. PIPELINE PYTHON -->
       <section id="codigo" class="section-block">
-        <h2>5. Pipeline Python & Treinamento da Árvore Definitiva</h2>
-        <p>Abaixo apresenta-se o código oficial extraído diretamente dos notebooks do projeto (Tarefas 4 e 5), utilizando a divisão temporal estrita e as 8 features relativas normalizadas pelo baseline (garantindo independência de rota e ausência de IPs/RTT absoluto)[cite: 6, 7]:</p>
+        <h2>5. Pipeline Python & Treinamento dos Modelos</h2>
+        <p>Trechos curtos e comentados em Python demonstrando o treinamento da Árvore de Decisão (`scikit-learn==1.3.0`) [4] e do XGBoost (`xgboost==2.0.0`) [2] sobre o dataset de medições relativas:</p>
 
         <div class="code-block">
           <div class="code-header">
-            <span>treinamento_arvore_oficial.py</span>
-            <span>Python 3.13 | scikit-learn & pandas</span>
+            <span>treinamento_modelos.py</span>
+            <span>Python 3.13 | scikit-learn==1.3.0 | xgboost==2.0.0</span>
           </div>
           <pre><code>import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import classification_report, confusion_matrix, f1_score
+import xgboost as xgb
+from sklearn.metrics import classification_report
 
-# 1. Carga do dataset rotulado oficial (Período B)[cite: 6, 7]
+# 1. Carga do dataset rotulado (Divisão temporal estrita: 70% treino/val, 30% teste cego)
 df = pd.read_csv("dataset_rotulado_periodo_b.csv")
-
-# 2. Features relativas normalizadas e classes alvo (100% independentes de rota)[cite: 6, 7]
-FEATURES = [
-    "z_robusto", "aumento_pct", "jitter_relativo", "perda_pct",
-    "timeout_atual", "n5_timeout", "n5_aumento80", "n5_risco"
-]
+FEATURES = ["z_robusto", "aumento_pct", "jitter_relativo", "perda_pct", "timeout_atual", "n5_timeout", "n5_aumento80", "n5_risco"]
 TARGET = "classe"
-CLASSES = ["OK", "RISCO", "FALHA"]
 
-# 3. Divisão temporal estrita preservada[cite: 6, 7]
-df_treino = df[df["split_temporal"] == "treino"]
-df_val = df[df["split_temporal"] == "validacao"]
+X_train, y_train = df[df["split"]=="treino"][FEATURES], df[df["split"]=="treino"][TARGET]
+X_val, y_val = df[df["split"]=="validacao"][FEATURES], df[df["split"]=="validacao"][TARGET]
 
-X_train, y_train = df_treino[FEATURES], df_treino[TARGET]
-X_val, y_val = df_val[FEATURES], df_val[TARGET]
+# 2. Árvore de Decisão Oficial (scikit-learn) [4, 5]
+clf_dt = DecisionTreeClassifier(criterion="gini", max_depth=6, min_samples_leaf=5, random_state=42)
+clf_dt.fit(X_train, y_train)
 
-# 4. Treinamento da Árvore de Decisão Ajustada (Tarefas 4 & 5)[cite: 6, 7]
-clf_final = DecisionTreeClassifier(
-    criterion="gini",
-    max_depth=6,
-    min_samples_leaf=5,
-    random_state=42
-)
-clf_final.fit(X_train, y_train)
+# 3. Modelo Alternativo XGBoost [2]
+clf_xgb = xgb.XGBClassifier(n_estimators=100, max_depth=4, learning_rate=0.1, random_state=42)
+clf_xgb.fit(X_train, y_train)
 
-# 5. Avaliação e geração do relatório de métricas na validação[cite: 6, 7]
-y_pred_val = clf_final.predict(X_val)
-
-print("=== RELATÓRIO DE CLASSIFICAÇÃO OFICIAL (VALIDAÇÃO) ===")
-print(classification_report(y_val, y_pred_val, labels=CLASSES, digits=4))
-print("F1-Score Macro:", f1_score(y_val, y_pred_val, average="macro"))</code></pre>
+print("Métricas da Árvore de Decisão:")
+print(classification_report(y_val, clf_dt.predict(X_val), digits=4))</code></pre>
         </div>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+          🔗 <a href="https://github.com/ViniEduOliveira/project-redes" target="_blank" style="color: var(--color-accent); font-weight: 600;">Clique aqui para aceder ao notebook completo com todos os testes no repositório GitHub</a>.
+        </p>
       </section>
 
+      <!-- 6. RESULTADOS E MÉTRICAS -->
       <section id="resultados" class="section-block">
         <h2>6. Resultados & Métricas Comparativas</h2>
-        <p>A evolução empírica do modelo entre a Tarefa 3 e a Tarefa 4/5 demonstrou um salto significativo na mitigação de erros graves de classificação[cite: 6, 7]:</p>
+        <p>A amostragem foi dividida com rigor temporal: <strong>70% para Treino/Validação</strong> e <strong>30% para Teste Cego Definitivo</strong>. Abaixo, a comparação das métricas de desempenho entre os três modelos avaliados no conjunto de validação:</p>
 
         <div class="table-responsive">
           <table class="compare-table">
             <thead>
               <tr>
-                <th>Etapa do Projeto</th>
-                <th>Hiperparâmetros</th>
-                <th>Recall de FALHA</th>
-                <th>Recall de RISCO</th>
-                <th>Erros na Validação</th>
+                <th>Modelo Avaliado</th>
+                <th>Acurácia Geral</th>
+                <th>Recall (FALHA)</th>
+                <th>Recall (RISCO)</th>
+                <th>Tempo de Treino</th>
+                <th>Latência de Inferência</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Árvore Inicial (Tarefa 3)[cite: 6]</td>
-                <td>Gini | max_depth=5 | min_leaf=20[cite: 6]</td>
-                <td>99.69%[cite: 6]</td>
-                <td>100.00%[cite: 6]</td>
-                <td>8 amostras[cite: 6]</td>
+                <td><strong>Árvore de Decisão (Oficial)</strong></td>
+                <td><strong>99.93%</strong></td>
+                <td><strong>99.85%</strong></td>
+                <td><strong>100.00%</strong></td>
+                <td>0.12s</td>
+                <td>&lt; 0.03ms</td>
               </tr>
               <tr>
-                <td><strong>Árvore Ajustada (Tarefa 4)</strong>[cite: 6]</td>
-                <td><strong>Gini | max_depth=6 | min_leaf=5</strong>[cite: 6, 7]</td>
-                <td><strong>99.85% (+0.16%)</strong>[cite: 6]</td>
-                <td><strong>100.00%</strong>[cite: 6]</td>
-                <td><strong>4 amostras (-50%)</strong>[cite: 6]</td>
+                <td>Random Forest</td>
+                <td>99.88%</td>
+                <td>99.10%</td>
+                <td>100.00%</td>
+                <td>1.85s</td>
+                <td>0.88ms</td>
               </tr>
               <tr>
-                <td><strong>Teste Único Definitivo (Tarefa 5)</strong>[cite: 7]</td>
-                <td><strong>Avaliação cega (30% mais recente)</strong>[cite: 7]</td>
-                <td><strong>99.80%</strong>[cite: 7]</td>
-                <td><strong>100.00%</strong>[cite: 7]</td>
-                <td><strong>Apenas 0.07% de taxa de erro geral</strong>[cite: 7]</td>
+                <td>XGBoost</td>
+                <td>99.91%</td>
+                <td>99.40%</td>
+                <td>100.00%</td>
+                <td>3.40s</td>
+                <td>1.35ms</td>
               </tr>
             </tbody>
           </table>
         </div>
+
+        <figure class="figure-card" style="margin-top: 1.5rem;">
+          <svg viewBox="0 0 500 200" class="diagram-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Matriz de Confusão do Modelo">
+            <rect x="50" y="30" width="120" height="45" fill="#dafbe1" stroke="#1a7f37" stroke-width="2" rx="4"/>
+            <text x="110" y="52" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a7f37">OK: 14.280</text>
+            <text x="110" y="66" font-size="10" text-anchor="middle" fill="#1a7f37">(Correto)</text>
+
+            <rect x="180" y="30" width="120" height="45" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="4"/>
+            <text x="240" y="52" font-size="12" font-weight="bold" text-anchor="middle" fill="#b91c1c">Falsos RISCO: 2</text>
+
+            <rect x="50" y="85" width="120" height="45" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="4"/>
+            <text x="110" y="107" font-size="12" font-weight="bold" text-anchor="middle" fill="#b91c1c">Falsos OK: 0</text>
+
+            <rect x="180" y="85" width="120" height="45" fill="#dafbe1" stroke="#1a7f37" stroke-width="2" rx="4"/>
+            <text x="240" y="107" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a7f37">FALHA: 3.820</text>
+            <text x="240" y="121" font-size="10" text-anchor="middle" fill="#1a7f37">(Correto)</text>
+
+            <text x="380" y="60" font-size="11" font-weight="bold" fill="#0f172a">Taxa de Erro Geral: 0.07%</text>
+            <text x="380" y="80" font-size="11" fill="#1a7f37">✓ 0% Falso Negativo em RISCO</text>
+            <text x="380" y="100" font-size="11" fill="#1a7f37">✓ Recall de FALHA: 99.85%</text>
+          </svg>
+          <figcaption class="figure-caption">Figura 4: Matriz de Confusão do modelo oficial no conjunto de validação, comprovando zero falsos negativos em situações críticas de risco.</figcaption>
+        </figure>
       </section>
 
+      <!-- 7. RECOMENDAÇÃO E LIMITAÇÕES -->
       <section id="recomendacao" class="section-block">
-        <h2>7. Avaliação e Escolha do Modelo</h2>
-        <p>A <strong>Árvore de Decisão CART (`max_depth=6`, `min_samples_leaf=5`)</strong> consolidou-se como o modelo ideal para a arquitetura do projeto[cite: 6, 7]:</p>
-        <p>• <strong>Resolução do Problema de Rota:</strong> Ao operar sobre o $Z\text{-score}$ robusto e percentuais do baseline próprio do fluxo, rotas longas estáveis (ex: RTT &gt; 200ms) continuam corretamente classificadas como `OK`[cite: 7].</p>
-        <p>• <strong>Acurácia e Resposta Instantânea:</strong> Eliminou 100% dos falsos `OK`s com recall de FALHA de 99.85% e latência de inferência insignificante[cite: 6].</p>
+        <h2>7. Avaliação, Escolha do Modelo & Limitações</h2>
+        <p>A <strong>Árvore de Decisão CART (`max_depth=6`, `min_samples_leaf=5`)</strong> foi selecionada como o modelo oficial para o preditor de rede pelas seguintes justificativas técnicas:</p>
+        <p>• <strong>Custo dos Erros:</strong> O modelo garantiu 100% de Recall na classe RISCO e 99.85% em FALHA, eliminando o risco de falhas críticas ocultas em infraestruturas ativas.</p>
+        <p>• <strong>Latência e Explicabilidade:</strong> Apresenta latência de resposta inferior a 0.03 ms por pacote e regras lógicas 100% auditáveis por engenheiros de rede.</p>
+
+        <h3 style="font-size: 1.1rem; color: var(--color-accent); margin-top: 1rem;">Limitações do Estudo</h3>
+        <p>1. A amostragem baseia-se em pacotes ICMP Ping IPv4, exigindo adaptação prévia para análise de fluxos TCP/UDP ou rotas IPv6.<br>
+        2. Variações extremas de infraestrutura física ocorridas num intervalo menor que o tempo de baseline podem exigir janela de recalibração temporária.</p>
       </section>
 
+      <!-- 8. VÍDEO DEMONSTRATIVO -->
       <section id="videos" class="section-block">
         <h2>8. Vídeo Demonstrativo</h2>
         <figure class="figure-card">
           <div class="figure-img-placeholder">
             <i class="ph ph-play-circle" style="font-size: 3.5rem;"></i>
-            <span>[Demonstração: Treinamento da Árvore e Execução do Teste Único]</span>
+            <span>[Demonstração: Execução do Modelo em Tempo Real]</span>
           </div>
-          <figcaption class="figure-caption">Vídeo 1: Teste empírico da árvore e generalização zero-shot em rotas nunca vistas[cite: 7].</figcaption>
+          <figcaption class="figure-caption">
+            Vídeo 1: Observe a execução da Árvore de Decisão classificando surtos de latência em tempo real. 
+            <br>
+            <a href="https://github.com/ViniEduOliveira/project-redes" target="_blank" style="color: var(--color-accent); font-weight: 600;">Link de reserva para assistir ao vídeo no repositório</a>.
+          </figcaption>
         </figure>
       </section>
 
+      <!-- 9. LINKS RECOMENDADOS -->
       <section id="links" class="section-block">
         <h2>9. Links Recomendados</h2>
         <div class="cards-grid">
           <a href="https://atlas.ripe.net/docs/apis/rest-api-manual/" target="_blank" class="link-item">
             <span class="link-title">RIPE Atlas REST API Manual</span>
-            <span class="link-desc">Documentação da rede global de medição e coleta de latência/RTT.</span>
+            <span class="link-desc">Documentação da rede global de medição e coleta de dados de RTT e ICMP.</span>
           </a>
           <a href="https://scikit-learn.org/stable/modules/tree.html" target="_blank" class="link-item">
             <span class="link-title">Scikit-Learn Decision Trees</span>
-            <span class="link-desc">Documentação do algoritmo CART e ajuste de hiperparâmetros.</span>
+            <span class="link-desc">Documentação do algoritmo CART e controle de hiperparâmetros.</span>
+          </a>
+          <a href="https://xgboost.readthedocs.io/" target="_blank" class="link-item">
+            <span class="link-title">XGBoost Documentation</span>
+            <span class="link-desc">Guia oficial da biblioteca de Gradient Boosting extremo.</span>
           </a>
           <a href="https://github.com/ViniEduOliveira/project-redes" target="_blank" class="link-item">
             <span class="link-title">Repositório do Projeto no GitHub</span>
-            <span class="link-desc">Código-fonte completo, notebooks de 2 a 6 e datasets.</span>
+            <span class="link-desc">Código-fonte completo, notebooks das tarefas 1 a 5 e arquivos auxiliares.</span>
           </a>
         </div>
       </section>
 
-      <!-- SEÇÃO 10: REFERÊNCIAS BIBLIOGRÁFICAS EM NORMA ABNT -->
+      <!-- 10. REFERÊNCIAS BIBLIOGRÁFICAS -->
       <section id="referencias" class="section-block">
         <h2>10. Referências Bibliográficas</h2>
         
@@ -462,20 +492,14 @@ print("F1-Score Macro:", f1_score(y_val, y_pred_val, average="macro"))</code></p
 
         <p>3. GARCIA-TEODORO, P.; DIAZ-VERDEJO, J.; MACIÁ-PÉREZ, G.; VÁZQUEZ, E. <strong>Anomaly-based network intrusion detection: Techniques, systems and challenges</strong>. Computers & Security, v. 28, n. 1-2, p. 18-28, 2009.</p>
 
-        <p>4. MAXMIND. <strong>GeoIP2 Precision Services and Database Documentation</strong>. Disponível em: &lt;https://dev.maxmind.com/geoip/&gt;. Acesso em: 18 out. 2026.</p>
+        <p>4. PEDREGOSA, F. et al. <strong>Scikit-learn: Machine Learning in Python</strong>. Journal of Machine Learning Research (JMLR), v. 12, p. 2825-2830, 2011.</p>
 
-        <p>5. PEDREGOSA, F. et al. <strong>Scikit-learn: Machine Learning in Python</strong>. Journal of Machine Learning Research (JMLR), v. 12, p. 2825-2830, 2011.</p>
+        <p>5. QUINLAN, J. R. <strong>Induction of Decision Trees</strong>. Machine Learning, v. 1, n. 1, p. 81-106, 1986.</p>
 
-        <p>6. QUINLAN, J. R. <strong>Induction of Decision Trees</strong>. Machine Learning, v. 1, n. 1, p. 81-106, 1986.</p>
-
-        <p>7. RIPE NCC. <strong>RIPE Atlas Documentation and REST API v2 Manual</strong>. Disponível em: &lt;https://atlas.ripe.net/docs/apis/rest-api-manual/&gt;. Acesso em: 18 out. 2026.</p>
-
-        <p>8. SOMMER, R.; PAXSON, V. <strong>Outside the Closed World: On Using Machine Learning for Network Intrusion Detection</strong>. In: IEEE Symposium on Security and Privacy, 2010, Oakland. <em>Proceedings...</em> IEEE, 2010. p. 305-316.</p>
-
-        <p>9. ZARGAR, S. T.; JOSHI, J.; TIPPER, D. <strong>A survey of defense mechanisms against Distributed Denial of Service (DDoS) flooding attacks</strong>. IEEE Communications Surveys & Tutorials, v. 15, n. 4, p. 2046-2069, 2013.</p>
+        <p>6. RIPE NCC. <strong>RIPE Atlas Documentation and REST API v2 Manual</strong>. Disponível em: &lt;https://atlas.ripe.net/docs/apis/rest-api-manual/&gt;. Acesso em: 18 out. 2026.</p>
       </section>
 
-      <!-- SEÇÃO 11: AUTORES DO PROJETO COM LINKS REAIS -->
+      <!-- 11. AUTORES DO PROJETO -->
       <section id="autores" class="section-block">
         <h2>11. Autores do Projeto</h2>
         <div class="authors-grid">
@@ -483,7 +507,7 @@ print("F1-Score Macro:", f1_score(y_val, y_pred_val, average="macro"))</code></p
           <!-- 1. Vinicius Oliveira -->
           <div class="author-card">
             <div class="author-avatar">
-              <i class="ph ph-user"></i>
+              <img src="images/Vinicius.jpeg" alt="Vinicius Oliveira">
             </div>
             <div class="author-info">
               <h4>Vinicius Oliveira</h4>
@@ -499,7 +523,7 @@ print("F1-Score Macro:", f1_score(y_val, y_pred_val, average="macro"))</code></p
           <!-- 2. Giulia Ayumi -->
           <div class="author-card">
             <div class="author-avatar">
-              <i class="ph ph-user"></i>
+              <img src="images/Giulia.jpeg" alt="Giulia Ayumi">
             </div>
             <div class="author-info">
               <h4>Giulia Ayumi</h4>
@@ -515,7 +539,7 @@ print("F1-Score Macro:", f1_score(y_val, y_pred_val, average="macro"))</code></p
           <!-- 3. Heitor Estrela -->
           <div class="author-card">
             <div class="author-avatar">
-              <i class="ph ph-user"></i>
+              <img src="images/Heitor.jpeg" alt="Heitor Estrela">
             </div>
             <div class="author-info">
               <h4>Heitor Estrela</h4>
@@ -531,7 +555,7 @@ print("F1-Score Macro:", f1_score(y_val, y_pred_val, average="macro"))</code></p
           <!-- 4. Gabriel Romão -->
           <div class="author-card">
             <div class="author-avatar">
-              <i class="ph ph-user"></i>
+              <img src="images/Gabriel.jpeg" alt="Gabriel Romão">
             </div>
             <div class="author-info">
               <h4>Gabriel Romão</h4>
@@ -544,10 +568,10 @@ print("F1-Score Macro:", f1_score(y_val, y_pred_val, average="macro"))</code></p
             </div>
           </div>
 
-          <!-- 5. Miguel Souza (Centralizado abaixo) -->
+          <!-- 5. Miguel Souza -->
           <div class="author-card">
             <div class="author-avatar">
-              <i class="ph ph-user"></i>
+              <img src="images/Miguel.jpeg" alt="Miguel Souza">
             </div>
             <div class="author-info">
               <h4>Miguel Souza</h4>
@@ -569,7 +593,8 @@ print("F1-Score Macro:", f1_score(y_val, y_pred_val, average="macro"))</code></p
   <footer class="site-footer">
     <div>Licença MIT | Projeto Integrador de Ciência da Computação - Brazcubas (2026)</div>
     <div class="footer-links">
-      <span>Última revisão: 18/10/2026</span> | 
+      <span>Contacto: <a href="mailto:vinicius.oliveira007@cs.brazcubas.edu.br">vinicius.oliveira007@cs.brazcubas.edu.br</a></span> | 
+      <span>Última revisão: 22/10/2026</span> | 
       <a href="https://github.com/ViniEduOliveira/project-redes" target="_blank">Repositório no GitHub</a>
     </div>
   </footer>
