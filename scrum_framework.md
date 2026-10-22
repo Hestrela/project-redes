@@ -71,10 +71,10 @@ flowchart LR
 | Sprint | Objetivo | Pontos | Status |
 | :---: | :--- | :---: | :---: |
 | 1 | Fonte de dados e ingestão (raw) | 10 | ✅ Concluída |
-| 2 | Tratamento (processed) | 10 | ⏳ Em andamento |
-| 3 | Janelas, RTT e jitter | 10 | 📋 Planejada |
-| 4 | Perda, vetor X e rotulagem | 10 | 📋 Planejada |
-| 5 | Modelo: árvore de decisão | 10 | 📋 Planejada |
+| 2 | Tratamento (processed) | 10 | ✅ Concluída |
+| 3 | Janelas, RTT e jitter | 10 | ✅ Concluída |
+| 4 | Perda, vetor X e rotulagem | 10 | ✅ Concluída |
+| 5 | Modelo: árvore de decisão | 10 | ✅ Concluída|
 | 6 | Monitoramento ao vivo e dashboard | 10 | 📋 Planejada |
 | 7 | Modo de simulação, testes e relatório | 10 | 📋 Planejada |
 
