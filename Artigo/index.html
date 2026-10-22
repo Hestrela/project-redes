@@ -41,10 +41,9 @@
         <a href="#codigo" class="toc-link">5. Pipeline Python & Treinamento</a>
         <a href="#resultados" class="toc-link">6. Resultados & Métricas Comparativas</a>
         <a href="#recomendacao" class="toc-link">7. Recomendação & Limitações</a>
-        <a href="#videos" class="toc-link">8. Vídeo Demonstrativo</a>
-        <a href="#links" class="toc-link">9. Links Recomendados</a>
-        <a href="#referencias" class="toc-link">10. Referências Bibliográficas</a>
-        <a href="#autores" class="toc-link">11. Autores do Projeto</a>
+        <a href="#links" class="toc-link">8. Links Recomendados</a>
+        <a href="#referencias" class="toc-link">9. Referências Bibliográficas</a>
+        <a href="#autores" class="toc-link">10. Autores do Projeto</a>
       </nav>
     </aside>
 
@@ -55,7 +54,7 @@
 
         <div class="article-meta">
           <div class="meta-authors-row" style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
-            <div style="display: flex; gap: -0.5rem; align-items: center;">
+            <div style="display: flex; align-items: center;">
               <img src="images/Vinicius.jpeg" alt="Vinicius" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #fff;" />
               <img src="images/Giulia.jpeg" alt="Giulia" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; margin-left: -8px;" />
               <img src="images/Heitor.jpeg" alt="Heitor" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; margin-left: -8px;" />
@@ -129,21 +128,21 @@
               </div>
               <figure class="figure-card">
                 <svg viewBox="0 0 650 250" class="diagram-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Diagrama da Árvore de Decisão">
-                  <path d="M 325 45 L 180 100" stroke="#94a3b8" stroke-width="2.5" fill="none" stroke-dasharray="4,4"/>
+                  <path d="M 325 45 L 180 100" stroke="#16a34a" stroke-width="2.5" fill="none"/>
                   <path d="M 325 45 L 470 100" stroke="#0969da" stroke-width="2.5" fill="none"/>
-                  <path d="M 470 145 L 370 195" stroke="#94a3b8" stroke-width="2.5" fill="none" stroke-dasharray="4,4"/>
+                  <path d="M 470 145 L 370 195" stroke="#ca8a04" stroke-width="2.5" fill="none"/>
                   <path d="M 470 145 L 570 195" stroke="#cf222e" stroke-width="2.5" fill="none"/>
 
-                  <text x="230" y="65" font-size="11" font-weight="bold" fill="#64748b">Não (&lt;= 3.50)</text>
+                  <text x="220" y="65" font-size="11" font-weight="bold" fill="#16a34a">Não (&lt;= 3.50)</text>
                   <text x="400" y="65" font-size="11" font-weight="bold" fill="#0969da">Sim (&gt; 3.50)</text>
-                  <text x="400" y="165" font-size="11" font-weight="bold" fill="#64748b">Não (&lt;= 16.67%)</text>
+                  <text x="400" y="165" font-size="11" font-weight="bold" fill="#ca8a04">Não (&lt;= 16.67%)</text>
                   <text x="530" y="165" font-size="11" font-weight="bold" fill="#cf222e">Sim (&gt; 16.67%)</text>
 
                   <rect x="225" y="10" width="200" height="40" rx="8" fill="#eff6ff" stroke="#0969da" stroke-width="2"/>
                   <text x="325" y="35" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">z_robusto &gt; 3.50?</text>
 
-                  <rect x="100" y="100" width="160" height="42" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
-                  <text x="180" y="125" font-size="13" font-weight="bold" text-anchor="middle" fill="#b91c1c">Classe: OK</text>
+                  <rect x="100" y="100" width="160" height="42" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+                  <text x="180" y="125" font-size="13" font-weight="bold" text-anchor="middle" fill="#15803d">Classe: OK</text>
 
                   <rect x="370" y="100" width="200" height="42" rx="8" fill="#eff6ff" stroke="#0969da" stroke-width="2"/>
                   <text x="470" y="125" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">perda_pct &gt; 16.67%?</text>
@@ -337,13 +336,13 @@ from sklearn.tree import DecisionTreeClassifier
 import xgboost as xgb
 from sklearn.metrics import classification_report
 
-# 1. Carga do dataset rotulado (Divisão temporal estrita: 70% treino/val, 30% teste cego)
+# 1. Carga do dataset rotulado (Divisão temporal estrita: 70% treino, 15% val, 15% teste cego)
 df = pd.read_csv("dataset_rotulado_periodo_b.csv")
 FEATURES = ["z_robusto", "aumento_pct", "jitter_relativo", "perda_pct", "timeout_atual", "n5_timeout", "n5_aumento80", "n5_risco"]
 TARGET = "classe"
 
-X_train, y_train = df[df["split"]=="treino"][FEATURES], df[df["split"]=="treino"][TARGET]
-X_val, y_val = df[df["split"]=="validacao"][FEATURES], df[df["split"]=="validacao"][TARGET]
+X_train, y_train = df[df["split_temporal"]=="treino"][FEATURES], df[df["split_temporal"]=="treino"][TARGET]
+X_val, y_val = df[df["split_temporal"]=="validacao"][FEATURES], df[df["split_temporal"]=="validacao"][TARGET]
 
 # 2. Árvore de Decisão Oficial (scikit-learn) [4, 5]
 clf_dt = DecisionTreeClassifier(criterion="gini", max_depth=6, min_samples_leaf=5, random_state=42)
@@ -364,7 +363,7 @@ print(classification_report(y_val, clf_dt.predict(X_val), digits=4))</code></pre
       <!-- 6. RESULTADOS E MÉTRICAS -->
       <section id="resultados" class="section-block">
         <h2>6. Resultados & Métricas Comparativas</h2>
-        <p>A amostragem foi dividida com rigor temporal: <strong>70% para Treino/Validação</strong> e <strong>30% para Teste Cego Definitivo</strong>. Abaixo, a comparação das métricas de desempenho entre os três modelos avaliados no conjunto de validação:</p>
+        <p>A amostragem foi dividida com rigor temporal estrito no notebook: <strong>70.0% para Treino</strong> (71.364 amostras), <strong>15.0% para Validação</strong> (15.292 amostras) e <strong>15.0% para Teste Cego Definitivo</strong> (15.293 amostras). Abaixo, a comparação do desempenho entre os três modelos no conjunto de validação:</p>
 
         <div class="table-responsive">
           <table class="compare-table">
@@ -443,25 +442,9 @@ print(classification_report(y_val, clf_dt.predict(X_val), digits=4))</code></pre
         2. Variações extremas de infraestrutura física ocorridas num intervalo menor que o tempo de baseline podem exigir janela de recalibração temporária.</p>
       </section>
 
-      <!-- 8. VÍDEO DEMONSTRATIVO -->
-      <section id="videos" class="section-block">
-        <h2>8. Vídeo Demonstrativo</h2>
-        <figure class="figure-card">
-          <div class="figure-img-placeholder">
-            <i class="ph ph-play-circle" style="font-size: 3.5rem;"></i>
-            <span>[Demonstração: Execução do Modelo em Tempo Real]</span>
-          </div>
-          <figcaption class="figure-caption">
-            Vídeo 1: Observe a execução da Árvore de Decisão classificando surtos de latência em tempo real. 
-            <br>
-            <a href="https://github.com/ViniEduOliveira/project-redes" target="_blank" style="color: var(--color-accent); font-weight: 600;">Link de reserva para assistir ao vídeo no repositório</a>.
-          </figcaption>
-        </figure>
-      </section>
-
-      <!-- 9. LINKS RECOMENDADOS -->
+      <!-- 8. LINKS RECOMENDADOS -->
       <section id="links" class="section-block">
-        <h2>9. Links Recomendados</h2>
+        <h2>8. Links Recomendados</h2>
         <div class="cards-grid">
           <a href="https://atlas.ripe.net/docs/apis/rest-api-manual/" target="_blank" class="link-item">
             <span class="link-title">RIPE Atlas REST API Manual</span>
@@ -482,9 +465,9 @@ print(classification_report(y_val, clf_dt.predict(X_val), digits=4))</code></pre
         </div>
       </section>
 
-      <!-- 10. REFERÊNCIAS BIBLIOGRÁFICAS -->
+      <!-- 9. REFERÊNCIAS BIBLIOGRÁFICAS -->
       <section id="referencias" class="section-block">
-        <h2>10. Referências Bibliográficas</h2>
+        <h2>9. Referências Bibliográficas</h2>
         
         <p>1. BREIMAN, L. <strong>Random Forests</strong>. Machine Learning, v. 45, n. 1, p. 5-32, 2001.</p>
 
@@ -499,9 +482,9 @@ print(classification_report(y_val, clf_dt.predict(X_val), digits=4))</code></pre
         <p>6. RIPE NCC. <strong>RIPE Atlas Documentation and REST API v2 Manual</strong>. Disponível em: &lt;https://atlas.ripe.net/docs/apis/rest-api-manual/&gt;. Acesso em: 18 out. 2026.</p>
       </section>
 
-      <!-- 11. AUTORES DO PROJETO -->
+      <!-- 10. AUTORES DO PROJETO -->
       <section id="autores" class="section-block">
-        <h2>11. Autores do Projeto</h2>
+        <h2>10. Autores do Projeto</h2>
         <div class="authors-grid">
           
           <!-- 1. Vinicius Oliveira -->
@@ -591,9 +574,8 @@ print(classification_report(y_val, clf_dt.predict(X_val), digits=4))</code></pre
   </div>
 
   <footer class="site-footer">
-    <div>Licença MIT | Projeto Integrador de Ciência da Computação - Brazcubas (2026)</div>
+    <div>Projeto Integrador de Ciência da Computação - Brazcubas (2026)</div>
     <div class="footer-links">
-      <span>Contacto: <a href="mailto:vinicius.oliveira007@cs.brazcubas.edu.br">vinicius.oliveira007@cs.brazcubas.edu.br</a></span> | 
       <span>Última revisão: 22/10/2026</span> | 
       <a href="https://github.com/ViniEduOliveira/project-redes" target="_blank">Repositório no GitHub</a>
     </div>
