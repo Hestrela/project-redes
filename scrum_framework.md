@@ -238,11 +238,3 @@ flowchart LR
 | Velocity de 10 pt com 7 sprints | Atraso em cascata | Reavaliar após a Sprint 2; tratar US13 e US19 como pontos de atenção. |
 
 ---
-
-## 📝 Histórico de Alterações (v3)
-
-* Escopo ampliado de "análise de dados RIPE Atlas" para o projeto completo: rotulagem, árvore de decisão, dashboard em tempo real e modo de simulação (7 sprints, 70 pontos).
-* Sprint 1 reflete o que foi entregue (Memorando de Decisão e Notebook de Coleta); nomes da equipe incluídos.
-* Tratamento do RTT `-1.0`/`*` do notebook incorporado à US05; formatos: `raw` em CSV (como entregue), `processed`/`analytics` em Parquet.
-* Detecção de anomalias por percentil (antiga US12) absorvida pelas regras de rotulagem (US13).
-* Coluna de disciplina adicionada à matriz; riscos específicos de ML e de simulação incluídos.
