@@ -1,0 +1,86 @@
+{
+  "validacao": {
+    "baseline_majoritaria": {
+      "f1_macro": 0.30098167222786404,
+      "acuracia": 0.8230626818302037,
+      "recall_falha": 0.0,
+      "precision_falha": 0.0,
+      "tempo_treino_s": 0.0,
+      "latencia_ms": 0.0
+    },
+    "baseline_persistencia": {
+      "f1_macro": 0.7049023499447076,
+      "acuracia": 0.8902406770695583,
+      "recall_falha": 0.7265037593984962,
+      "precision_falha": 0.7271872060206962,
+      "tempo_treino_s": 0.0,
+      "latencia_ms": 0.0
+    },
+    "arvore_decisao": {
+      "f1_macro": 0.7436128371604273,
+      "acuracia": 0.9208542713567839,
+      "recall_falha": 0.662124060150376,
+      "precision_falha": 0.9275839368005266,
+      "tempo_treino_s": 0.40881629998330027,
+      "latencia_ms": 0.0005721502247197749
+    },
+    "random_forest": {
+      "f1_macro": 0.7446214504971932,
+      "acuracia": 0.920589791060566,
+      "recall_falha": 0.6447368421052632,
+      "precision_falha": 0.9416609471516816,
+      "tempo_treino_s": 1.577377300010994,
+      "latencia_ms": 0.006048280879186653
+    },
+    "xgboost": {
+      "f1_macro": 0.7524722994974407,
+      "acuracia": 0.9238957947632901,
+      "recall_falha": 0.6752819548872181,
+      "precision_falha": 0.9367666232073012,
+      "tempo_treino_s": 3.519295499951113,
+      "latencia_ms": 0.004539076965257892
+    }
+  },
+  "teste": {
+    "baseline_majoritaria": {
+      "f1_macro": 0.2997952617724481,
+      "acuracia": 0.8171671538665958,
+      "recall_falha": 0.0,
+      "precision_falha": 0.0,
+      "tempo_treino_s": 0.0,
+      "latencia_ms": 0.0
+    },
+    "baseline_persistencia": {
+      "f1_macro": 0.6881833176664127,
+      "acuracia": 0.882208344406059,
+      "recall_falha": 0.7359470949456779,
+      "precision_falha": 0.7324870709920075,
+      "tempo_treino_s": 0.0,
+      "latencia_ms": 0.0
+    },
+    "arvore_decisao": {
+      "f1_macro": 0.7059041355447143,
+      "acuracia": 0.9090486314111081,
+      "recall_falha": 0.6386395843174303,
+      "precision_falha": 0.9191026512576479,
+      "tempo_treino_s": 0.40881629998330027,
+      "latencia_ms": 0.0003933497191199633
+    },
+    "random_forest": {
+      "f1_macro": 0.7093339609941333,
+      "acuracia": 0.911706085570024,
+      "recall_falha": 0.651393481341521,
+      "precision_falha": 0.9217914438502673,
+      "tempo_treino_s": 1.577377300010994,
+      "latencia_ms": 0.005675405262199231
+    },
+    "xgboost": {
+      "f1_macro": 0.7133287968546124,
+      "acuracia": 0.9127690672335902,
+      "recall_falha": 0.6556447803495512,
+      "precision_falha": 0.927187708750835,
+      "tempo_treino_s": 3.519295499951113,
+      "latencia_ms": 0.005226714060336912
+    }
+  }
+}
