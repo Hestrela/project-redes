@@ -8,8 +8,8 @@
 # Se houver falha ao carregar o modelo em produção, alinhe estas versões
 # com as do notebook predicao_12min/experimento_preditivo_12min.ipynb.
 
-fastapi[standard]>=0.162.0,<1
-uvicorn[standard]>=0.30.0,<1
+fastapi>=0.162.0,<1
+pydantic>=2.0,<3
 joblib>=1.6.0,<2
 numpy>=2.0,<3
 pandas>=2.0,<4
