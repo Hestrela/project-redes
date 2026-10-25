@@ -1,9 +1,11 @@
+
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "services": {
     "api": {
       "root": ".",
       "framework": "fastapi",
+      "entrypoint": "api.main:app",
       "functions": {
         "api/main.py": {
           "maxDuration": 300,
@@ -16,7 +18,9 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/api/main.py"
+      "destination": {
+        "service": "api"
+      }
     }
   ]
 }
