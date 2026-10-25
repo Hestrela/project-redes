@@ -8,8 +8,8 @@
         "api/main.py": {
           "maxDuration": 300,
           "includeFiles": "predicao_12min/modelos/xgboost_t12.joblib",
-          "excludeFiles": "{metadados/**,Artigo/**,classificacao_instantanea/**,predicao_12min/imagens/**,predicao_12min/resultados/**,predicao_12min/*.ipynb,tests/**,**/tests/**,**/__tests__/**,**/test/**,**/test_*.py,**/*.test.py,.agents/**,api/payload_teste_t12.json,api/teste.py,**/__pycache__/**,**/*.pyc,**/*.pyo,.venv/**,.git/**}"
-
+          "excludeFiles": "{metadados/**,Artigo/**,classificacao_instantanea/**,predicao_12min/imagens/**,predicao_12min/resultados/**,predicao_12min/*.ipynb,tests/**,.agents/**,api/payload_teste_t12.json,api/teste.py,**/__pycache__/**,*.ipynb,.venv/**,.git/**}"
+        }
       }
     }
   },
