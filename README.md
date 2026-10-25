@@ -1,93 +1,87 @@
-# Preditor de Falha e Risco em Dispositivos de Rede
+# 🌐 Preditor de Falha e Risco em Dispositivos de Rede (t + 12 min)
 
-Projeto multidisciplinar de Ciência da Computação que integra **Redes de Computadores**, **Estrutura de Dados II** e **Análise e Projeto de Sistemas**. Desenvolvido pelo Grupo 4 com a metodologia **Scrum**.
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
+[![XGBoost](https://img.shields.io/badge/ML-XGBoost%201.7+-green.svg)](https://xgboost.readthedocs.io/)
+[![Metodologia](https://img.shields.io/badge/Scrum-Sprint%207%2F7-brightgreen.svg)](#)
 
-**Página do projeto:** Página Local (alterar ao subir a página)
+Projeto multidisciplinar de Bacharelado em Ciência da Computação integrando as disciplinas de **Redes de Computadores**, **Estrutura de Dados II** e **Análise e Projeto de Sistemas**. Desenvolvido pelo Grupo 4 através da metodologia ágil **Scrum**.
 
-**Repositório:** <https://github.com/ViniEduOliveira/project-redes>
-
----
-
-## Integrantes do Grupo
-
-- Vinicius Eduardo Santos de Oliveira
-- Giulia Ayumi Shimada Cardoso
-- Heitor Estrela de Andrade
-- Gabriel Romão da Silva
-- Miguel Augusto da Costa Souza
-
-**Docentes orientadores:** Andrea Sakai, Denise De Souza e Luis De Oliveira.
+**Página do Projeto (Artigo Web):** https://projeto-redes-swart.vercel.app/
 
 ---
 
-## Objetivo
+## 👥 Integrantes do Grupo e Papéis
 
-Desenvolver, de forma iterativa e incremental via metodologia Scrum, uma aplicação que treine um **modelo preditivo de árvore de decisão** a partir de logs históricos de rede. O sistema deve disponibilizar um **dashboard** capaz de classificar o status dos dispositivos em tempo real, realizando o monitoramento da rede local e permitindo a injeção de eventos simulados sob demanda.
+| Integrante | Papel Scrum | Responsabilidades Principais |
+| :--- | :--- | :--- |
+| **Vinicius Eduardo Santos de Oliveira** | Product Owner (PO) | Visão do produto, arquitetura de ML e integração do projeto |
+| **Giulia Ayumi Shimada Cardoso** | Scrum Master (SM) | Gestão de sprints, facilitação ágil e revisão de código |
+| **Heitor Estrela de Andrade** | Developer | Engenharia de atributos e otimização de dataset |
+| **Gabriel Romão da Silva** | Developer | Processamento de séries temporais e tratamento de nulos |
+| **Miguel Augusto da Costa Souza** | Developer | Documentação, testes e interface do Artigo Web |
 
----
-
-## Descrição do Projeto
-
-A aplicação coleta métricas reais de dispositivos (como **latência**, **perda de pacotes** e **jitter**) para treinar o algoritmo de árvore de decisão.
-
-Em produção, o sistema conta com um dashboard em tempo real que monitora os IPs via ping e classifica o estado de cada dispositivo em três categorias: **OK**, **RISCO** ou **FALHA**. Além do monitoramento ao vivo, é feita a verificação da rede em cenários variados.
-
----
-
-## Estrutura do repositório
-
-| Arquivo / pasta | Conteúdo |
-| --- | --- |
-| `Memorando_de_Decisao_grupo4.md` | Decisão da fonte de dados (dataset CAIDA x API RIPE Atlas) e justificativa |
-| `coleta.py` | Script de coleta de medições de ping pela API do RIPE Atlas |
-| `2_Coleta_de_dados.ipynb` | Notebook da etapa de coleta de dados |
-| `3_Baseline_e_Rotulagem.ipynb` | Baseline e rotulagem (OK, RISCO, FALHA) |
-| `4_Arvore_Inicial.ipynb` | Árvore de decisão inicial e ajuste a partir do erro |
-| `metadados/` | Metadados do projeto |
+**Docentes Orientadores (Stakeholders):** Andrea Sakai, Denise de Souza e Luis de Oliveira.
 
 ---
 
-## Como reproduzir o experimento
+## 🎯 Objetivo do Projeto
 
-### 1. Ambiente
+Desenvolver um pipeline de Machine Learning capaz de diagnosticar o estado da rede e **antecipar instabilidades e falhas com 12 minutos de antecedência** ($t + 12\text{ min}$).
 
-- **Google Colab** (Utilizado pelo grupo)
-- **Python:** Python 3
-- **Bibliotecas:** `matplotlib.pyplot`, `FancyBboxPatch`, `Polygon`, `json`, `time`, `urllib3`, `datetime`, `Pathlib`, `google.colab`, `requests`, `pandas`, `os`, `random`
-
-### 2. Onde baixar os dados
-
-Os dados vêm da **API pública do RIPE Atlas** (<https://atlas.ripe.net/api/v2/>), escolhida no Memorando de Decisão em vez do dataset CAIDA Ark. O script `coleta.py` consulta apenas endpoints públicos de leitura e **não usa chave de API**.
-
-O script faz o seguinte:
-
-- Lista as âncoras ativas do RIPE Atlas.
-- Para cada âncora-alvo, escolhe duas medições públicas de ping IPv4 em andamento e sorteia sondas de origem diferentes em cada uma.
-- Baixa os resultados das últimas **366 horas** e grava tudo em `medicoes_consolidadas.csv`.
-
-Parâmetros no topo do script: `TOTAL_DUPLAS = 15`, `PROBES_POR_MEDICAO = 5`, `HORAS_COLETA = 366` e semente aleatória `42`.
-
-O CSV é salvo em `./ripe_atlas/raw/`. No Google Colab, o script monta o Google Drive e salva em `MyDrive/ripe_atlas/raw/`.
-
-> **Atenção:** a janela de coleta é relativa ao momento da execução e as medições do RIPE Atlas continuam rodando. Por isso, uma nova coleta não devolve exatamente os mesmos registros.
-
-### 3. Ordem de execução
-
-1. `coleta.py` (ou `2_Coleta_de_dados.ipynb`) para gerar `medicoes_consolidadas.csv`.
-2. `3_Baseline_e_Rotulagem.ipynb` para calcular o baseline e rotular OK, RISCO e FALHA.
-3. `4_Arvore_Inicial.ipynb` para treinar e ajustar a árvore de decisão.
+O sistema consome dados públicos de telemetria da internet (**RIPE Atlas**), aplica tratamento de séries temporais e engenharia de atributos estatísticos, classificando os enlaces entre três estados operacionais: **`OK`**, **`RISCO`** e **`FALHA`**. Os resultados e a metodologia são apresentados de forma interativa através de um **Artigo Web**.
 
 ---
 
-## Créditos e referências
+## 🧩 Divisão dos Módulos do Projeto
 
-- RIPE NCC. **RIPE Atlas**. Plataforma e API de medições de rede. Disponível em: <https://atlas.ripe.net/>.
-- CAIDA - CENTER FOR APPLIED INTERNET DATA ANALYSIS. **The IPv4 Routed /24 Topology Dataset**. La Jolla: CAIDA, 2008. Disponível em: <https://www.caida.org/catalog/datasets/ipv4_routed_24_topology_dataset/>. Acesso em: 5 set. 2026.
-- CAIDA - CENTER FOR APPLIED INTERNET DATA ANALYSIS. **Archipelago (Ark) Monitor Locations**. La Jolla: CAIDA, [s.d.]. Disponível em: <https://www.caida.org/projects/ark/locations/>. Acesso em: 5 set. 2026.
-- RIPE NCC. **REST API Manual**. Amsterdã: RIPE NCC, [s.d.]. Disponível em: <https://atlas.ripe.net/docs/apis/rest-api-manual/>. Acesso em: 5 set. 2026.
-- RIPE NCC. **Credits**. Amsterdã: RIPE NCC, [s.d.]. Disponível em: <https://atlas.ripe.net/docs/getting-started/credits>. Acesso em: 5 set. 2026.
-- RIPE NCC. **Rate Limiting**. Amsterdã: RIPE NCC, [s.d.]. Disponível em: <https://atlas.ripe.net/docs/apis/rest-api-manual/core-concepts/rate-limiting/>. Acesso em: 5 set. 2026.
-- RIPE NCC. **RIPE Atlas Documentation**. Amsterdã: RIPE NCC, [s.d.]. Disponível em: <https://atlas.ripe.net/docs/>. Acesso em: 5 set. 2026.
-- RIPE NCC. **RIPE Atlas**. Amsterdã: RIPE NCC, [s.d.]. Disponível em: <https://www.ripe.net/analyse/internet-measurements/ripe-atlas/>. Acesso em: 5 set. 2026.
-- RIPE NCC. **RIPE Atlas**. [S.l.: s.n.], 13 jan. 2017. 1 vídeo (2 min 34 s). Canal RIPE NCC. Disponível em: <https://www.youtube.com/watch?v=Z3SW2vO8qW0>. Acesso em: 5 set. 2026.
-- SAKAI, Andrea Ono. **Aula 5 - Fonte de dados do projeto**. Mogi das Cruzes: Cruzeiro do Sul Virtual, 2026. Material de aula em PDF.
+O repositório está dividido em duas abordagens complementares de análise:
+
+### 1. Classificação Instantânea (`classificacao_instantanea/`)
+- **Foco:** Diagnóstico em tempo real ($t_0$).
+- **Objetivo:** Identificar se o enlace de rede já se encontra degradado no momento exato da medição. Funciona como a linha de base (*baseline*) para validação das métricas brutas de latência, perda de pacotes e jitter.
+
+### 2. Predição Preditiva Temporal (`predicao_12min/`) — Core do Projeto
+- **Foco:** Projeção futura no horizonte de $t + 12\text{ min}$ (com tolerância de $\pm 30$ segundos).
+- **Objetivo:** Analisar o comportamento da rede no instante $t$ através de um **vetor de 8 atributos estatísticos** e prever o estado operacional futuro, permitindo ações preventivas de gestão de infraestrutura.
+- **Vetor de Entrada ($X$):** `z_robusto`, `aumento_pct`, `jitter_relativo`, `perda_pct`, `timeout_atual`, `n5_timeout`, `n5_aumento80`, `n5_risco`.
+- **Validação:** Divisão temporal estrita (70% Treino, 15% Validação, 15% Teste Cego) garantindo ausência de vazamento de dados (*data leakage*).
+
+---
+
+## 📊 Comparativo de Desempenho dos Modelos ($t + 12\text{ min}$)
+
+Avaliação realizada sobre o **conjunto cego de validação**:
+
+| Algoritmo | Acurácia Global | F1-Macro | Precisão (Classe FALHA) | Tempo de Treino |
+| :--- | :---: | :---: | :---: | :---: |
+| **Árvore de Decisão (CART)** | $91.50\%$ | $0.7430$ | $91.20\%$ | $< 0.5\text{ s}$ |
+| **Random Forest** | $92.30\%$ | $0.7438$ | $93.59\%$ | $< 2.0\text{ s}$ |
+| **XGBoost Classifier (Campeão)** | **$92.80\%$** | **$0.7525$** | **$93.68\%$** | **$< 1.2\text{ s}$** |
+
+> **Destaque:** O modelo XGBoost foi selecionado como campeão devido à sua superioridade na precisão da classe `FALHA` ($93.68\%$), minimizando significativamente a emissão de alarmes falsos.
+
+---
+
+## 🚀 Como Reproduzir os Experimentos
+
+### 1. Pré-requisitos e Ambiente
+
+Recomenda-se o uso do **Python 3.10+** ou execução direta no **Google Colab**. Para ambiente local, instale as dependências:
+
+```bash
+pip install pandas numpy scikit-learn xgboost joblib matplotlib seaborn requests
+```
+
+### 2. Execução dos Notebooks
+
+1. **Classificação Instantânea ($t_0$):** Navegue até `classificacao_instantanea/notebooks/` para visualizar a análise exploratória e baselines do comportamento imediato da rede.
+2. **Predição Futura ($t + 12\text{ min}$):** Acesse `predicao_12min/` e execute o notebook `experimento_preditivo_12min.ipynb` para rodar o pipeline completo do XGBoost (carregamento dos 8 atributos da camada Gold, treino, avaliação temporal e exportação do arquivo `.joblib`).
+
+---
+
+## 📚 Créditos e Referências
+
+- RIPE NCC. **RIPE Atlas API v2 Manual**. Amsterdã: RIPE NCC. Disponível em: <https://atlas.ripe.net/docs/apis/rest-api-manual/>.
+- CHEN, Tianqi; GUESTRIN, Carlos. **XGBoost: A Scalable Tree Boosting System**. In: ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, 2016.
+- PEDREGOSA, F. et al. **Scikit-learn: Machine Learning in Python**. Journal of Machine Learning Research, v. 12, p. 2825-2830, 2011.
+- SAKAI, Andrea Ono; SOUZA, Denise de; OLIVEIRA, Luis de. **Orientações do Projeto Interdisciplinar**. Universidade Braz Cubas, 2026.
