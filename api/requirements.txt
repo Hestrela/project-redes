@@ -5,4 +5,4 @@ joblib
 numpy
 requests
 scikit-learn
-xgboost
+xgboost-cpu>=3.0,<4
