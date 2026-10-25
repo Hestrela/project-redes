@@ -7,10 +7,28 @@
       "excludeFiles": "{metadados/**,Artigo/**,classificacao_instantanea/**,predicao_12min/imagens/**,predicao_12min/resultados/**,predicao_12min/*.ipynb,tests/**,.agents/**,api/payload_teste_t12.json,api/teste.py,**/__pycache__/**,*.ipynb,.venv/**,.git/**}"
     }
   },
+  "services": {
+    "app": {
+      "root": ".",
+      "framework": "fastapi"
+    },
+    "api": {
+      "root": "api",
+      "framework": "fastapi"
+    }
+  },
   "rewrites": [
     {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "api"
+      }
+    },
+    {
       "source": "/(.*)",
-      "destination": "/api/main.py"
+      "destination": {
+        "service": "app"
+      }
     }
   ]
 }
