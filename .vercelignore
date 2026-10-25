@@ -1,0 +1,16 @@
+# Arquivos que NÃO devem ser enviados ao Vercel durante o upload do source.
+# Complementa excludeFiles no vercel.json (que atua no bundle da Function).
+metadados/
+Artigo/
+classificacao_instantanea/
+predicao_12min/imagens/
+predicao_12min/resultados/
+predicao_12min/*.ipynb
+tests/
+.agents/
+.venv/
+.git/
+__pycache__/
+*.ipynb
+api/payload_teste_t12.json
+api/teste.py

@@ -1,0 +1,18 @@
+# Dependências da API — usadas pelo Vercel para instalar o bundle.
+# As versões abaixo são compatíveis com as usadas no ambiente local (Python 3.13)
+# que carregou e validou o modelo xgboost_t12.joblib.
+#
+# NOTA: as versões exatas usadas para *treinar* o modelo não estão registradas.
+# O artefato foi serializado com pickle (via joblib) em Python 3.13. Mudanças
+# maiores em scikit-learn ou xgboost podem quebrar a desserialização.
+# Se houver falha ao carregar o modelo em produção, alinhe estas versões
+# com as do notebook predicao_12min/experimento_preditivo_12min.ipynb.
+
+fastapi[standard]>=0.162.0,<1
+uvicorn[standard]>=0.30.0,<1
+joblib>=1.6.0,<2
+numpy>=2.0,<3
+pandas>=2.0,<4
+requests>=2.31,<3
+scikit-learn>=1.9,<2
+xgboost>=3.0,<4
