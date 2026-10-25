@@ -134,12 +134,12 @@ def _infer_t12(
     features: dict[str, float | int],
 ) -> PredictionResponse:
     try:
-        import pandas as pd
+        import numpy as np
 
         model = _load_model()
-        feature_frame = pd.DataFrame([features], columns=FEATURES)
-        class_index = int(model.predict(feature_frame)[0])
-        probability_values = model.predict_proba(feature_frame)[0]
+        feature_vector = np.array([[features[col] for col in FEATURES]], dtype=np.float32)
+        class_index = int(model.predict(feature_vector)[0])
+        probability_values = model.predict_proba(feature_vector)[0]
     except Exception as exc:
         raise HTTPException(
             status_code=503,
