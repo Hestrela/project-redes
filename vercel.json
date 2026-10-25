@@ -1,34 +1,22 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": {
-    "api/main.py": {
-      "maxDuration": 300,
-      "includeFiles": "predicao_12min/modelos/xgboost_t12.joblib",
-      "excludeFiles": "{metadados/**,Artigo/**,classificacao_instantanea/**,predicao_12min/imagens/**,predicao_12min/resultados/**,predicao_12min/*.ipynb,tests/**,.agents/**,api/payload_teste_t12.json,api/teste.py,**/__pycache__/**,*.ipynb,.venv/**,.git/**}"
-    }
-  },
   "services": {
-    "app": {
-      "root": ".",
-      "framework": "fastapi"
-    },
     "api": {
-      "root": "api",
-      "framework": "fastapi"
+      "root": ".",
+      "framework": "fastapi",
+      "functions": {
+        "api/main.py": {
+          "maxDuration": 300,
+          "includeFiles": "predicao_12min/modelos/xgboost_t12.joblib",
+          "excludeFiles": "{metadados/**,Artigo/**,classificacao_instantanea/**,predicao_12min/imagens/**,predicao_12min/resultados/**,predicao_12min/*.ipynb,tests/**,.agents/**,api/payload_teste_t12.json,api/teste.py,**/__pycache__/**,*.ipynb,.venv/**,.git/**}"
+        }
+      }
     }
   },
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": {
-        "service": "api"
-      }
-    },
-    {
       "source": "/(.*)",
-      "destination": {
-        "service": "app"
-      }
+      "destination": "/api/main.py"
     }
   ]
 }
