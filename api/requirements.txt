@@ -1,0 +1,8 @@
+fastapi[standard]
+uvicorn[standard]
+joblib
+numpy
+pandas
+requests
+scikit-learn
+xgboost
